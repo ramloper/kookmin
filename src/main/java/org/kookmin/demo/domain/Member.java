@@ -1,20 +1,37 @@
 package org.kookmin.demo.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.kookmin.demo.common.MemberRole;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Member {
+@Builder
+@ToString(exclude = "roleSet")
+public class Member extends BaseEntity{
 
     @Id
-    private String number;
+    private String username; // 학번
+
+    @Column(columnDefinition = "TEXT")
+    private String password;
+
+    private String name;
+
+    private String phoneNumber;
+
+    @Builder.Default
+    @ElementCollection(fetch = FetchType.LAZY)
+    private Set<MemberRole> roleSet = new HashSet<>();
+
+    public void addRole(MemberRole memberRole){
+        this.roleSet.add(memberRole);
+    }
 }
