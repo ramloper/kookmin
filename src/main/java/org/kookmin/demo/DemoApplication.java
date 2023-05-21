@@ -48,6 +48,9 @@ public class DemoApplication {
 						.id(value)
 						.name("미술교육책")
 						.fileName("test.jpg")
+								.publisher("미진사")
+								.writer("박지혜")
+								.translator("박지혜")
 						.status(EducationStatus.WAITING)
 						.build());
 			});

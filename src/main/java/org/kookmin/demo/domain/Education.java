@@ -19,6 +19,12 @@ public class Education {
 
     private String name;
 
+    private String publisher;
+
+    private String writer;
+
+    private String translator;
+
     private String fileName;
 
     private EducationStatus status;
