@@ -53,19 +53,17 @@
         </a>
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="#" class="nav-link px-2 link-secondary">Overview</a></li>
-          <li><a href="#" class="nav-link px-2 link-body-emphasis">Inventory</a></li>
-          <li><a href="#" class="nav-link px-2 link-body-emphasis">Customers</a></li>
-          <li><a href="#" class="nav-link px-2 link-body-emphasis">Products</a></li>
+          <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
+          <li><a href="#" class="nav-link px-2 link-body-emphasis">대여 현황</a></li>
+          <li><a href="#" class="nav-link px-2 link-body-emphasis">도서 등록</a></li>
+          <li><a href="#" class="nav-link px-2 link-body-emphasis">공지</a></li>
         </ul>
 
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-          <input type="search" class="form-control" placeholder="Book Search" aria-label="Search">
-        </form>
+
 
         <div class="dropdown text-end">
           <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle"> <!-- 삭제 예정 -->
           </a>
           <ul class="dropdown-menu text-small">
             <li><a class="dropdown-item" href="#">.......</a></li>
@@ -97,14 +95,25 @@
         <b>Authenticated user role:</b>
         <div sec:authentication="principal.authorities"></div>
         <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
+
         <p>
           <a href="#" class="btn btn-primary my-2">Main call to action</a>
           <a href="#" class="btn btn-secondary my-2">Secondary action</a>
         </p>
+
       </div>
     </div>
   </section>
 
+  <select class="form-select" aria-label="Default select example">
+    <option selected>Open this select menu</option>
+    <option value="1">제목</option>
+    <option value="2">출판사</option>
+    <option value="3">Three</option>
+  </select>
+  <form class="col-8 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+    <input type="search" class="form-control" placeholder="Book Search" aria-label="Search">
+  </form>
   <div class="album py-5 bg-light">
     <div class="container">
 

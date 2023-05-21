@@ -28,17 +28,9 @@ public class MainController {
     }
 
 
-
-
     @PutMapping("start")
     public String login(MemberLoginRequestDTO dto){
 
         return "redirect:main";
-    }
-
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("join")
-    public String join(){
-        return "join";
     }
 }
