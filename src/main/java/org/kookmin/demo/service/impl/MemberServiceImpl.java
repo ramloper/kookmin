@@ -1,12 +1,16 @@
 package org.kookmin.demo.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.kookmin.demo.common.MemberRole;
+import org.kookmin.demo.domain.Member;
 import org.kookmin.demo.dto.request.member.MemberModifyRequestDTO;
 import org.kookmin.demo.dto.request.member.MemberSaveRequestDTO;
 import org.kookmin.demo.dto.response.MemberResponseDTO;
+import org.kookmin.demo.exception.UserNameExistException;
 import org.kookmin.demo.repository.MemberRepository;
 import org.kookmin.demo.service.MemberService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,12 +20,24 @@ import java.util.List;
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
+    private final PasswordEncoder encoder;
+
 
     @Value("${file.path}")
     private String uploadFolder;
     @Override
-    public void saveMember(MemberSaveRequestDTO request) {
+    public void saveMember(MemberSaveRequestDTO dto) throws UserNameExistException {
+        boolean exist = memberRepository.existsById(dto.getUsername());
 
+        if (exist) throw new UserNameExistException();
+        Member member = Member.builder()
+                .username(dto.getUsername())
+                .password(encoder.encode(dto.getPassword()))
+                .name(dto.getName())
+                .phoneNumber(dto.getPhoneNumber())
+                .build();
+        member.addRole(MemberRole.USER);
+        memberRepository.save(member);
     }
 
     @Override

@@ -34,4 +34,6 @@ public class Member extends BaseEntity{
     public void addRole(MemberRole memberRole){
         this.roleSet.add(memberRole);
     }
+
+    public void changPassword(String password) { this.password = password; }
 }
