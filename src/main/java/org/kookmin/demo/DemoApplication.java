@@ -79,6 +79,7 @@ public class DemoApplication {
 						.education(educationRepository.findById(value).orElseThrow())
 						.status(RentalStatus.WAITING)
 						.build());
+
 			});
 		};
 	}
