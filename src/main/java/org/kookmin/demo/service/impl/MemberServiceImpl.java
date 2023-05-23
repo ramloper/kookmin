@@ -3,8 +3,8 @@ package org.kookmin.demo.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.kookmin.demo.common.MemberRole;
 import org.kookmin.demo.domain.Member;
-import org.kookmin.demo.dto.request.member.MemberModifyRequestDTO;
-import org.kookmin.demo.dto.request.member.MemberSaveRequestDTO;
+import org.kookmin.demo.dto.request.member.MemberModifyDTO;
+import org.kookmin.demo.dto.request.member.MemberSaveDTO;
 import org.kookmin.demo.dto.response.MemberResponseDTO;
 import org.kookmin.demo.exception.UserNameExistException;
 import org.kookmin.demo.repository.MemberRepository;
@@ -26,7 +26,7 @@ public class MemberServiceImpl implements MemberService {
     @Value("${file.path}")
     private String uploadFolder;
     @Override
-    public void saveMember(MemberSaveRequestDTO dto) throws UserNameExistException {
+    public void saveMember(MemberSaveDTO dto) throws UserNameExistException {
         boolean exist = memberRepository.existsById(dto.getUsername());
 
         if (exist) throw new UserNameExistException();
@@ -51,7 +51,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void updateMember(MemberModifyRequestDTO request) {
+    public void updateMember(MemberModifyDTO request) {
 
     }
 

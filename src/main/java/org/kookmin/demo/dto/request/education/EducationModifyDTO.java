@@ -1,4 +1,4 @@
 package org.kookmin.demo.dto.request.education;
 
-public class EducationModifyRequestDTO {
+public class EducationModifyDTO {
 }

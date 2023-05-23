@@ -1,10 +1,9 @@
 package org.kookmin.demo.dto.request.member;
 
 import lombok.Data;
-import org.kookmin.demo.domain.Member;
 
 @Data
-public class MemberSaveRequestDTO {
+public class MemberSaveDTO {
 
     private String username;
 

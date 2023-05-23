@@ -2,10 +2,9 @@ package org.kookmin.demo.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.kookmin.demo.dto.request.member.MemberSaveRequestDTO;
+import org.kookmin.demo.dto.request.member.MemberSaveDTO;
 import org.kookmin.demo.exception.UserNameExistException;
 import org.kookmin.demo.service.MemberService;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +20,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/login")
-    public void login(String error, String logout){
+    public void login(String error, String logout) {
         log.info("login get.......");
         log.info("logout : " + logout);
 
@@ -29,16 +28,16 @@ public class MemberController {
     }
 
     @GetMapping("/joinPage")
-    public String joinPage(){
+    public String joinPage() {
         return "user/join";
     }
 
     @PostMapping("/join")
-    public String join(MemberSaveRequestDTO dto, RedirectAttributes redirect){
+    public String join(MemberSaveDTO dto, RedirectAttributes redirect) {
 
         try {
             memberService.saveMember(dto);
-        }catch (UserNameExistException e) {
+        } catch (UserNameExistException e) {
             redirect.addFlashAttribute("error", "username");
             return "redirect:/user/joinPage";
         }

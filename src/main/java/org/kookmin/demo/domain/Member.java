@@ -5,7 +5,9 @@ import org.kookmin.demo.common.MemberRole;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -30,6 +32,9 @@ public class Member extends BaseEntity{
     @Builder.Default
     @ElementCollection(fetch = FetchType.LAZY)
     private Set<MemberRole> roleSet = new HashSet<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<Rental> education = new ArrayList<>();
 
     public void addRole(MemberRole memberRole){
         this.roleSet.add(memberRole);

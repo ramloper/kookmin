@@ -1,11 +1,13 @@
 package org.kookmin.demo;
 
-import org.kookmin.demo.common.EducationStatus;
 import org.kookmin.demo.common.MemberRole;
+import org.kookmin.demo.common.RentalStatus;
 import org.kookmin.demo.domain.Education;
 import org.kookmin.demo.domain.Member;
+import org.kookmin.demo.domain.Rental;
 import org.kookmin.demo.repository.EducationRepository;
 import org.kookmin.demo.repository.MemberRepository;
+import org.kookmin.demo.repository.RentalRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,6 +25,7 @@ public class DemoApplication {
 	@Bean
 	CommandLineRunner initData(MemberRepository memberRepository,
 							   EducationRepository educationRepository,
+							   RentalRepository rentalRepository,
 							   PasswordEncoder passwordEncoder) {
 
 		return (args)->{
@@ -33,11 +36,19 @@ public class DemoApplication {
 					.phoneNumber("010-1234-1234")
 					.roleSet(Collections.singleton(MemberRole.ADMIN))
 					.build());
+			Member member = memberRepository.save(Member.builder()
+					.username("user")
+					.password(passwordEncoder.encode("1234"))
+					.name("유저")
+					.phoneNumber("010-1234-1234")
+					.roleSet(Collections.singleton(MemberRole.USER))
+					.build());
+
 			IntStream.rangeClosed(1, 9).forEach(value -> {
 				memberRepository.save(Member.builder()
 						.username("J202233"+value)
 						.password(passwordEncoder.encode("1234"))
-						.name("유저"+value)
+						.name("유저이름"+value)
 						.phoneNumber("010-1234-1234")
 						.roleSet(Collections.singleton(MemberRole.USER))
 						.build());
@@ -46,12 +57,21 @@ public class DemoApplication {
 			IntStream.rangeClosed(1, 10).forEach(value -> {
 				educationRepository.save(Education.builder()
 						.id(value)
-						.name("미술교육책")
+						.name("미술교육책."+value)
 						.fileName("test.jpg")
-								.publisher("미진사")
-								.writer("박지혜")
-								.translator("박지혜")
-						.status(EducationStatus.WAITING)
+						.publisher("미진사")
+						.writer("박지혜")
+						.translator("김우람")
+						.build());
+			});
+
+
+			IntStream.rangeClosed(1, 10).forEach(value -> {
+				rentalRepository.save(Rental.builder()
+						.id(value)
+						.member(member)
+						.education(educationRepository.findById(value).orElseThrow())
+						.status(RentalStatus.WAITING)
 						.build());
 			});
 		};

@@ -1,9 +1,10 @@
 package org.kookmin.demo.domain;
 
 import lombok.*;
-import org.kookmin.demo.common.EducationStatus;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -27,8 +28,11 @@ public class Education {
 
     private String fileName;
 
-    private EducationStatus status;
+
 
     @OneToOne
     private EducationImage image;
+
+    @OneToMany(mappedBy = "education")
+    private List<Rental> rental = new ArrayList<>();
 }

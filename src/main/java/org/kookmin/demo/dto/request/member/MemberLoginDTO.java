@@ -1,6 +1,6 @@
 package org.kookmin.demo.dto.request.member;
 
-public class MemberLoginRequestDTO {
+public class MemberLoginDTO {
 
     private String studentId;
 
