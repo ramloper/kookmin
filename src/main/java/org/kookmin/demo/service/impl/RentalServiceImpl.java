@@ -42,7 +42,7 @@ public class RentalServiceImpl implements RentalService {
     }
     @Override
     public List<Rental> myRentalList(String username){
-        List<Rental> rentalList = rentalRepository.findAllById(username);
+        List<Rental> rentalList = rentalRepository.findMyAllById(username);
         return rentalList;
     }
 
@@ -52,8 +52,10 @@ public class RentalServiceImpl implements RentalService {
     }
 
     @Override
-    public void rentalDelete() {
-
+    @Transactional
+    public void rentalDelete(Integer id) {
+        Rental rental = rentalRepository.findById(id).orElseThrow();
+        rental.setStatus(RentalStatus.DELETED);
     }
 
     @Transactional

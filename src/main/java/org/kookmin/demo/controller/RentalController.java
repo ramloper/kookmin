@@ -58,7 +58,9 @@ public class RentalController {
 
 
     @PostMapping("/delete")
-    public void rentalDelete(Integer id){
+    public String rentalDelete(Integer id){
+        rentalService.rentalDelete(id);
 
+        return "redirect:/rental/user/page";
     }
 }

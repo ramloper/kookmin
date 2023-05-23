@@ -44,7 +44,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public List<Member> findAllMember() {
-        List<Member> memberList = memberRepository.findAllByRental();
+        List<Member> memberList = memberRepository.findAll();
         return memberList;
     }
 

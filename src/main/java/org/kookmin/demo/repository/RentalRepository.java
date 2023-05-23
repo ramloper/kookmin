@@ -18,5 +18,5 @@ public interface RentalRepository extends JpaRepository<Rental, Integer> {
     Rental findByEducationId(@Param("id")Integer id);
 
     @Query("select r from Rental r join fetch r.member m where m.username = :username")
-    List<Rental> findAllById(@Param("username") String username);
+    List<Rental> findMyAllById(@Param("username") String username);
 }

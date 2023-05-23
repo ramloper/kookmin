@@ -20,7 +20,7 @@ public interface RentalService {
 
     void rentalUpdate();
 
-    void rentalDelete();
+    void rentalDelete(Integer id);
 
     void okRental(Integer id);
     public LocalDate returnDay();
