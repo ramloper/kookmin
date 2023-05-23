@@ -60,69 +60,44 @@
         </a>
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
-          <li><a sec:authorize="hasRole('ADMIN')" href="/rental/page" class="nav-link px-2 link-body-emphasis">관리자 페이지</a></li>
-          <li><a sec:authorize="hasRole('USER')" href="/rental/user" class="nav-link px-2 link-body-emphasis">마이 페이지</a></li>
+          <li><a href="/main" class="nav-link px-2 link-secondary">Home</a></li>
+          <li><a sec:authorize="hasRole('ADMIN')" href="/rental/admin/page" class="nav-link px-2 link-body-emphasis">관리자 페이지</a></li>
+          <li><a sec:authorize="hasRole('USER')" href="/rental/user/page" class="nav-link px-2 link-body-emphasis">마이 페이지</a></li>
           <li><a href="#" class="nav-link px-2 link-body-emphasis">공지</a></li>
         </ul>
 
 
 
-        <div class="flex-shrink-0 dropdown">
-          <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
-          </a>
-          <ul class="dropdown-menu text-small shadow">
-            <li><a class="dropdown-item" href="/rental/page">관리자 페이지</a></li>
-            <li><a class="dropdown-item" href="#">My Rental List</a></li>
-            <li><a class="dropdown-item" href="#">.........</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Logout</a></li>
-          </ul>
-        </div>
+        <form th:action="@{/logout}" method="POST" sec:authorize="isAuthenticated()">
+          <button type="submit" class="btn btn-outline-dark">logout</button>
+        </form>
       </div>
     </div>
   </header>
 
 <main>
 
-  <section class="py-5 text-center container">
-    <div class="row py-lg-5">
-      <div class="col-lg-6 col-md-8 mx-auto">
-        <h1 class="fw-light">Album example</h1>
-        <h1 sec:authorize="hasRole('USER')">Has user Role</h1>
-        <b>Authenticated DTO:</b>
-        <div sec:authentication="principal"></div>
 
-        <!--인증시 사용된 객체의 Username (ID)-->
-        <b>Authenticated username:</b>
-        <div sec:authentication="name"></div>
-
-        <!--객체의 권한-->
-        <b>Authenticated user role:</b>
-        <div sec:authentication="principal.authorities"></div>
-        <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
-
-        <p>
-          <a href="#" class="btn btn-primary my-2">Main call to action</a>
-          <a href="#" class="btn btn-secondary my-2">Secondary action</a>
-        </p>
-
-      </div>
-    </div>
-  </section>
-
-  <select class="form-select" aria-label="Default select example">
-    <option selected>Open this select menu</option>
-    <option value="1">제목</option>
-    <option value="2">출판사</option>
-    <option value="3">Three</option>
-  </select>
-  <form class="col-8 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-    <input type="search" class="form-control" placeholder="Book Search" aria-label="Search">
-  </form>
   <div class="album py-5 bg-light">
     <div class="container">
+      <form class="row g-3" action="/main/search" method="post">
+        <div class="col-md-6">
+          <input id="search" name="name" type="search" class="form-control" placeholder="Book Search" aria-label="Search">
+          <label for="search" class="form-label"></label>
+        </div>
+        <div class="col-md-4">
+          <select id="inputState" name="searchType" class="form-select">
+            <option value="title" selected>제목</option>
+            <option value="writer">저자</option>
+            <option value="translator">역자</option>
+            <option value="publisher">출판사</option>
+          </select>
+          <label for="inputState" class="form-label"></label>
+        </div>
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-primary">검색</button>
+        </div>
+      </form>
 
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         <div class="col" th:each="education : ${educationList}">
@@ -130,7 +105,7 @@
             <img class="bd-placeholder-img card-img-top" th:src="@{'/image/' + ${education.getFileName()}}" width="100%" height="225" alt="Thumbnail" />
             <div class="card-body">
               <p class="card-text">
-                책이름   <span th:text="${education.getName()}"></span></p>
+                책이름   <span th:text="${education.getBookName()}"></span></p>
               <p class="card-text">
                 출판사   <span th:text="${education.getPublisher()}"></span></p>
               </p>
@@ -150,7 +125,7 @@
                     <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h1 class="modal-title fs-5" id="exampleModalLabel" th:text="${education.getName()}">title</h1>
+                          <h1 class="modal-title fs-5" id="exampleModalLabel" th:text="${education.getBookName()}">title</h1>
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -168,14 +143,30 @@
                       </div>
                     </div>
                   </div>
-                  <button type="button" class="btn btn-sm btn-outline-secondary" th:text="${education.getName()}">...</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary" th:text="${education.getBookName()}">...</button>
                 </div>
                 <small class="text-muted"><button onclick="window.open('/main')" type="button" class="btn btn-sm btn-outline-secondary">더 보기</button></small>
               </div>
             </div>
           </div>
         </div>
+
       </div>
+        <div class="d-flex justify-content-center mt-4">
+          <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+              <li class="page-item" th:class="${educationPage.first ? 'disabled' : ''}">
+                <a class="page-link" th:href="@{/main(page=${educationPage.number - 1})}" th:if="${educationPage.hasPrevious()}">Previous</a>
+              </li>
+              <li class="page-item" th:each="page : ${#numbers.sequence(0, educationPage.totalPages - 1)}" th:class="${page == educationPage.number ? 'active' : ''}">
+                <a class="page-link" th:href="@{/main(page=${page})}" th:text="${page + 1}"></a>
+              </li>
+              <li class="page-item" th:class="${educationPage.hasNext() ? '' : 'disabled'}">
+                <a class="page-link" th:href="@{/main(page=${educationPage.number + 1})}" th:if="${educationPage.hasNext()}">Next</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
     </div>
   </div>
 

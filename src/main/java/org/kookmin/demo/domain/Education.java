@@ -1,6 +1,7 @@
 package org.kookmin.demo.domain;
 
 import lombok.*;
+import org.kookmin.demo.common.EducationStatus;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,13 +13,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Education {
+public class Education extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String name;
+    private String bookName;
 
     private String publisher;
 
@@ -27,6 +28,8 @@ public class Education {
     private String translator;
 
     private String fileName;
+
+    private EducationStatus status;
 
 
 

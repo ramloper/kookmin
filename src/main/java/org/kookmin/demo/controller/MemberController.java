@@ -2,14 +2,20 @@ package org.kookmin.demo.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.kookmin.demo.domain.Member;
+import org.kookmin.demo.domain.Rental;
+import org.kookmin.demo.dto.request.member.MemberModifyDTO;
 import org.kookmin.demo.dto.request.member.MemberSaveDTO;
 import org.kookmin.demo.exception.UserNameExistException;
 import org.kookmin.demo.service.MemberService;
+import org.kookmin.demo.service.RentalService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.security.Principal;
+import java.util.List;
 
 @Controller
 @Log4j2
@@ -18,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class MemberController {
 
     private final MemberService memberService;
+    private final RentalService rentalService;
 
     @GetMapping("/login")
     public void login(String error, String logout) {
@@ -43,5 +50,38 @@ public class MemberController {
         }
         redirect.addFlashAttribute("result", "success");
         return "redirect:/user/login";
+    }
+
+    @GetMapping("/list")
+    public String detailMember(Model model){
+        List<Member> memberList = memberService.findAllMember();
+        model.addAttribute("memberList", memberList);
+        return "user/userlist";
+    }
+    @GetMapping("/member/info")
+    @ResponseBody
+    public String getMemberInfo(@RequestParam("studentId") String studentId) {
+        // 회원 정보 조회 로직을 수행하여 결과를 반환합니다.
+        // 예시로 회원 이름과 이메일을 가져온다고 가정합니다.
+        Member member = memberService.findMemberById(studentId);
+        if (member != null) {
+            String memberInfo = "이름: " + member.getMemberName() + "<br>"
+                    + "핸드폰 번호: " + member.getPhoneNumber();
+            return memberInfo;
+        } else {
+            return "회원 정보를 찾을 수 없습니다.";
+        }
+    }
+
+    @PostMapping("/modify")
+    public String modifyMember(Principal principal, MemberModifyDTO dto){
+        memberService.modifyMember(principal.getName(), dto);
+        return "redirect:/rental/user/page";
+    }
+
+    @PostMapping("/delete")
+    public String deleteMember(Principal principal){
+        memberService.deleteMember(principal.getName());
+        return "redirect:/rental/admin/page";
     }
 }

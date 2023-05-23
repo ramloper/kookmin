@@ -7,11 +7,9 @@ import org.kookmin.demo.domain.Member;
 import org.kookmin.demo.repository.MemberRepository;
 import org.kookmin.demo.security.dto.MemberSecurityDTO;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +34,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         MemberSecurityDTO dto = new MemberSecurityDTO(
                 member.getUsername(),
                 member.getPassword(),
-                member.getName(),
+                member.getMemberName(),
                 member.getPhoneNumber(),
                 member.getRoleSet().stream().map(
                         memberRole -> new SimpleGrantedAuthority("ROLE_"+memberRole.name()))

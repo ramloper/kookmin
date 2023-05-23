@@ -38,39 +38,24 @@ public class RentalController {
         return "redirect:/main";
     }
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public List<Rental> rentalList(){
-        return rentalService.rentalList();
-    }
-
-    @GetMapping("/page")
+    @GetMapping("/admin/page")
     public String adminPage(Model model){
         List<Rental> list = rentalService.rentalList();
         model.addAttribute("list", list);
 
         return "admin";
     }
-
-    @PostMapping("/ok")
-    public String rentalOk(Integer id, Model model){
-        rentalService.okRental(id);
-        List<Rental> list = rentalService.rentalList();
-
-        model.addAttribute("list", list);
-        return "admin";
-    }
-
-    @GetMapping("/user")
+    @GetMapping("/user/page")
     public String userPage(Principal principal, Model model){
         List<Rental> list = rentalService.myRentalList(principal.getName());
-        System.out.println("===========================================");
-        System.out.println(principal.getName());
-        System.out.println("===========================================");
-        System.out.println(list.size());
         model.addAttribute("list", list);
 
         return "user";
     }
+
+
+
+
 
     @PostMapping("/delete")
     public void rentalDelete(Integer id){
