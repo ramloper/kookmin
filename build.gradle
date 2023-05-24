@@ -31,7 +31,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	testImplementation 'org.springframework.security:spring-security-test'
-
+	implementation 'commons-io:commons-io:2.6' //사진 업로드
 	runtimeOnly 'com.h2database:h2'
 }
 tasks.named('test') {

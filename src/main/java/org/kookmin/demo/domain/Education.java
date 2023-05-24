@@ -37,5 +37,6 @@ public class Education extends BaseEntity{
     private EducationImage image;
 
     @OneToMany(mappedBy = "education")
+    @Builder.Default
     private List<Rental> rental = new ArrayList<>();
 }

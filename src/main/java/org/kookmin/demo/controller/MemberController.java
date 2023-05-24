@@ -72,6 +72,13 @@ public class MemberController {
             return "회원 정보를 찾을 수 없습니다.";
         }
     }
+    @GetMapping("/page")
+    public String userPage(Principal principal, Model model){
+        List<Rental> list = rentalService.myRentalList(principal.getName());
+        model.addAttribute("list", list);
+
+        return "user";
+    }
 
     @PostMapping("/modify")
     public String modifyMember(Principal principal, MemberModifyDTO dto){

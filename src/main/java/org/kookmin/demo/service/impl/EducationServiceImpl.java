@@ -3,6 +3,7 @@ package org.kookmin.demo.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.kookmin.demo.domain.Education;
 import org.kookmin.demo.dto.request.education.EducationModifyDTO;
+import org.kookmin.demo.dto.request.education.EducationSaveDTO;
 import org.kookmin.demo.dto.request.education.EducationSearchDTO;
 import org.kookmin.demo.dto.response.EducationResponseDTO;
 import org.kookmin.demo.repository.EducationRepository;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -22,8 +24,8 @@ public class EducationServiceImpl implements EducationService {
     private final EducationRepository educationRepository;
 
     @Override
-    public void saveEducation(EducationModifyDTO dto) {
-
+    public void saveEducation(EducationSaveDTO dto) {
+        educationRepository.save(dto.toEntity());
     }
 
     @Override

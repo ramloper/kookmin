@@ -38,20 +38,8 @@ public class RentalController {
         return "redirect:/main";
     }
 
-    @GetMapping("/admin/page")
-    public String adminPage(Model model){
-        List<Rental> list = rentalService.rentalList();
-        model.addAttribute("list", list);
 
-        return "admin";
-    }
-    @GetMapping("/user/page")
-    public String userPage(Principal principal, Model model){
-        List<Rental> list = rentalService.myRentalList(principal.getName());
-        model.addAttribute("list", list);
 
-        return "user";
-    }
 
 
 
