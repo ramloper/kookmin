@@ -13,6 +13,7 @@
 
 ## ✍🏻 ERD 
 
+![스크린샷 2023-05-23 142738](https://github.com/ramloper/kookmin/assets/114231216/390b69b7-a7de-4643-90e8-b76ba1ac2dfd)
 
 ## 🌟 동작 방식 
 
@@ -25,9 +26,9 @@
 
 ## 💡 주요 기능
 ### 1. 로그인
-
+- SSR으로 프로젝트를 구현하여 로그인 정보를 Spring-Security를 이용해 session에 저장하여 인증 및 인가를 구현
 ### 2. 회원가입 / 회원 정보 수정
-
+- bootstrap을 이용하여 
 ### 3. 도서 검색 / 도서 대여
 
 
