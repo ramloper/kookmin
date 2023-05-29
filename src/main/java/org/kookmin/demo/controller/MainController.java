@@ -3,7 +3,6 @@ package org.kookmin.demo.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.kookmin.demo.domain.Education;
-import org.kookmin.demo.domain.Rental;
 import org.kookmin.demo.dto.request.education.EducationSearchDTO;
 import org.kookmin.demo.dto.request.member.MemberLoginDTO;
 import org.kookmin.demo.service.EducationService;
@@ -14,9 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
 @Controller
