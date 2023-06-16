@@ -36,7 +36,7 @@ public class MainController {
         model.addAttribute("educationPage", educationPage);
         LocalDate nextThursday = rentalService.returnDay();
         model.addAttribute("nextThursday", nextThursday);
-        return "main";
+        return "main/main";
     }
 
     @PostMapping("/search")
@@ -56,7 +56,7 @@ public class MainController {
         model.addAttribute("educationPage", educationPage);
         LocalDate nextThursday = rentalService.returnDay();
         model.addAttribute("nextThursday", nextThursday);
-        return "main";
+        return "main/main";
     }
 
 
