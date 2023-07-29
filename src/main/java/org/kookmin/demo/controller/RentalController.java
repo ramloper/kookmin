@@ -26,29 +26,22 @@ public class RentalController {
     private final RentalService rentalService;
 
     @PostMapping("/save")
-    public String join(RentalSaveDTO dto, RedirectAttributes redirect) {
+    public String insertRental(RentalSaveDTO dto, RedirectAttributes redirect) {
 
         try {
             rentalService.rentalSave(dto);
         } catch (Exception e) {
             redirect.addFlashAttribute("error", "failSave");
-            return "redirect:/main";
+            return "redirect:/main/main";
         }
         redirect.addFlashAttribute("result", "success");
-        return "redirect:/main";
+        return "redirect:/main/main";
     }
 
-
-
-
-
-
-
-
     @PostMapping("/delete")
-    public String rentalDelete(Integer id){
+    public String deleteRental(Integer id){
         rentalService.rentalDelete(id);
 
-        return "redirect:/rental/user/page";
+        return "redirect:/user/page";
     }
 }

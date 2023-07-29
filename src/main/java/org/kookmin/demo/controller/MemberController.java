@@ -27,12 +27,13 @@ public class MemberController {
     private final RentalService rentalService;
 
     @GetMapping("/login")
-    public void login(String error, String logout) {
-        log.info("login get.......");
-        log.info("logout : " + logout);
-
-        if (logout != null) log.info("user logout===========================");
+    public void login(@RequestParam(required = false) String err, String logout, Model model) {
+        if (err != null){
+            model.addAttribute("err", "err");
+            model.addAttribute("alertMessage", "ID, PassWord Check");
+        }
     }
+
 
     @GetMapping("/joinPage")
     public String joinPage() {
@@ -77,18 +78,18 @@ public class MemberController {
         List<Rental> list = rentalService.myRentalList(principal.getName());
         model.addAttribute("list", list);
 
-        return "user";
+        return "user/user";
     }
 
     @PostMapping("/modify")
     public String modifyMember(Principal principal, MemberModifyDTO dto){
         memberService.modifyMember(principal.getName(), dto);
-        return "redirect:/rental/user/page";
+        return "redirect:/user/page";
     }
 
     @PostMapping("/delete")
     public String deleteMember(Principal principal){
         memberService.deleteMember(principal.getName());
-        return "redirect:/rental/admin/page";
+        return "redirect:/admin/page";
     }
 }

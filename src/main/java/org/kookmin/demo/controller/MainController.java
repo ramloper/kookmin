@@ -43,9 +43,6 @@ public class MainController {
     public String educationSearch(EducationSearchDTO dto,
                                   @RequestParam(defaultValue = "0") int page,
                                   Model model){
-        System.out.println("=================");
-        System.out.println(dto.getSearchType());
-        System.out.println(dto.getName());
         int pageSize = 10; // 페이지당 항목 수
         PageRequest pageable = PageRequest.of(page, pageSize);
 
@@ -57,12 +54,5 @@ public class MainController {
         LocalDate nextThursday = rentalService.returnDay();
         model.addAttribute("nextThursday", nextThursday);
         return "main/main";
-    }
-
-
-    @PutMapping("start")
-    public String login(MemberLoginDTO dto){
-
-        return "redirect:main";
     }
 }

@@ -109,8 +109,8 @@
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="/main" class="nav-link px-2 link-secondary">Home</a></li>
-                <li><a sec:authorize="hasRole('ADMIN')" href="/rental/admin/page" class="nav-link px-2 link-body-emphasis">관리자 페이지</a></li>
-                <li><a sec:authorize="hasRole('USER')" href="/rental/user/page" class="nav-link px-2 link-body-emphasis">마이 페이지</a></li>
+                <li><a sec:authorize="hasRole('ADMIN')" href="/admin/page" class="nav-link px-2 link-body-emphasis">관리자 페이지</a></li>
+                <li><a sec:authorize="hasRole('USER')" href="/user/page" class="nav-link px-2 link-body-emphasis">마이 페이지</a></li>
                 <li><a href="#" class="nav-link px-2 link-body-emphasis">공지</a></li>
             </ul>
             <form th:action="@{/logout}" method="POST" sec:authorize="isAuthenticated()">

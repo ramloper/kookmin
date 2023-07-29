@@ -58,10 +58,6 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public void modifyMember(String username, MemberModifyDTO dto) {
         Member member = memberRepository.findById(username).orElseThrow();
-
-        System.out.println("=================");
-        System.out.println(member.getMemberName());
-        System.out.println(member.getPhoneNumber());
         if (dto.getMemberName() != null) {
             member.setMemberName(dto.getMemberName());
         }
@@ -71,9 +67,6 @@ public class MemberServiceImpl implements MemberService {
         if (dto.getPhoneNumber() != null) {
             member.setPhoneNumber(dto.getPhoneNumber());
         }
-        System.out.println("=================");
-        System.out.println(member.getMemberName());
-        System.out.println(member.getPhoneNumber());
     }
 
     @Override

@@ -1,8 +1,11 @@
 package org.kookmin.demo.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.kookmin.demo.domain.DayOfWeek;
 import org.kookmin.demo.domain.Rental;
+import org.kookmin.demo.dto.request.education.EducationDaySaveDTO;
 import org.kookmin.demo.dto.request.education.EducationSaveDTO;
+import org.kookmin.demo.service.DayOfWeekService;
 import org.kookmin.demo.service.EducationService;
 import org.kookmin.demo.service.RentalService;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +13,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,6 +29,7 @@ import java.util.List;
 public class AdminController {
     private final EducationService educationService;
     private final RentalService rentalService;
+    private final DayOfWeekService dayOfWeekService;
 
     @Value("${file.path}")
     String savePath;
@@ -52,24 +57,38 @@ public class AdminController {
         educationService.saveEducation(dto);
         return "redirect:/admin/page";
     }
+    @PostMapping("/education/day/update/return")
+    public String updateDayReturn(@ModelAttribute EducationDaySaveDTO dto){
+        dayOfWeekService.updateDayReturn(dto);
+        return "redirect:/admin/page";
+    }
+    @PostMapping("/education/day/update/rental")
+    public String updateDayRental(@ModelAttribute EducationDaySaveDTO dto){
+        dayOfWeekService.updateDayRental(dto);
+        return "redirect:/admin/page";
+    }
+
     @PostMapping("/ok")
     public String rentalOk(Integer id, Model model){
         rentalService.okRental(id);
         List<Rental> list = rentalService.rentalList();
 
         model.addAttribute("list", list);
-        return "admin";
+        return "admin/admin";
     }
 
     @GetMapping("/page")
     public String adminPage(Model model){
         List<Rental> list = rentalService.rentalList();
         model.addAttribute("list", list);
+        DayOfWeek dayOfWeekReturn = dayOfWeekService.findByDayOfWeekReturn();
+        DayOfWeek dayOfWeekRental = dayOfWeekService.findByDayOfWeekRental();
 
-        return "admin";
+        model.addAttribute("dayOfWeekReturn", dayOfWeekReturn);
+        model.addAttribute("dayOfWeekRental", dayOfWeekRental);
+
+        return "admin/admin";
     }
 
 
 }
-
-//json 통신? 그렇죠

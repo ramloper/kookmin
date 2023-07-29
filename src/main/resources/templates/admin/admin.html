@@ -175,6 +175,50 @@
         </form>
       </div>
       <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">대여 요일</h4>
+        <form class="needs-validation" th:object="${dayOfWeekRental}" th:action="@{/admin/education/day/update/rental}" method="post">
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <label for="rentalMonday" class="form-label">월요일</label>
+              <input type="checkbox" th:checked="${monDay}" th:field="*{monDay}" name="rentalMonday" id="rentalMonday">
+            </div>
+            <div class="col-sm-6">
+              <label for="rentalTuesDay" class="form-label">화요일</label>
+              <input type="checkbox" th:checked="${tuesDay}" th:field="*{tuesDay}" name="rentalTuesDay" id="rentalTuesDay">
+            </div>
+            <div class="col-sm-6">
+              <label for="rentalWednesDay" class="form-label">수요일</label>
+              <input type="checkbox" th:checked="${wednesDay}" th:field="*{wednesDay}" name="rentalWednesDay" id="rentalWednesDay">
+            </div>
+            <div class="col-sm-6">
+              <label for="rentalThursDay" class="form-label">목요일</label>
+              <input type="checkbox" th:checked="${thursDay}" th:field="*{thursDay}" name="rentalThursDay" id="rentalThursDay">
+            </div>
+            <div class="col-sm-6">
+              <label for="rentalFriDay" class="form-label">금요일</label>
+              <input type="checkbox" th:checked="${friDay}" th:field="*{friDay}" name="rentalFriDay" id="rentalFriDay">
+            </div>
+          </div>
+          <button class="w-100 btn btn-primary btn-lg" type="submit">등 록</button>
+        </form>
+      </div>
+      <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">반납 요일</h4>
+        <form class="needs-validation" th:object="${dayOfWeekReturn}" th:action="@{/admin/education/day/update/return}" method="post">
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <label for="returnTuesDay" class="form-label">화요일</label>
+              <input type="checkbox" th:checked="${tuesDay}" th:field="*{tuesDay}" name="returnTuesDay" id="returnTuesDay">
+            </div>
+            <div class="col-sm-6">
+              <label for="returnThursDay" class="form-label">목요일</label>
+              <input type="checkbox" th:checked="${thursDay}" th:field="*{thursDay}" name="returnThursDay" id="returnThursDay">
+            </div>
+          </div>
+          <button class="w-100 btn btn-primary btn-lg" type="submit">등 록</button>
+        </form>
+      </div>
+      <div class="col-md-7 col-lg-8">
         <h4 class="mb-3">도서 추가</h4>
         <form class="needs-validation" action="/admin/education/save" method="post" enctype="multipart/form-data" novalidate>
           <div class="row g-3">

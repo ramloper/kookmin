@@ -4,9 +4,11 @@ import org.kookmin.demo.common.EducationStatus;
 import org.kookmin.demo.common.MemberRole;
 import org.kookmin.demo.common.MemberStatus;
 import org.kookmin.demo.common.RentalStatus;
+import org.kookmin.demo.domain.DayOfWeek;
 import org.kookmin.demo.domain.Education;
 import org.kookmin.demo.domain.Member;
 import org.kookmin.demo.domain.Rental;
+import org.kookmin.demo.repository.DayOfWeekRepository;
 import org.kookmin.demo.repository.EducationRepository;
 import org.kookmin.demo.repository.MemberRepository;
 import org.kookmin.demo.repository.RentalRepository;
@@ -26,11 +28,25 @@ public class DemoApplication {
 	@Profile("dev")
 	@Bean
 	CommandLineRunner initData(MemberRepository memberRepository,
+							   DayOfWeekRepository dayOfWeekRepository,
 							   EducationRepository educationRepository,
 							   RentalRepository rentalRepository,
 							   PasswordEncoder passwordEncoder) {
 
 		return (args)->{
+			dayOfWeekRepository.save(DayOfWeek.builder()
+							.id(1)
+							.thursDay(true)
+							.tuesDay(false)
+					.build());
+			dayOfWeekRepository.save(DayOfWeek.builder()
+					.id(2)
+					.monDay(false)
+					.tuesDay(true)
+					.wednesDay(false)
+					.thursDay(true)
+					.friDay(false)
+					.build());
 			memberRepository.save(Member.builder()
 					.username("admin")
 					.password(passwordEncoder.encode("1234"))
@@ -83,6 +99,23 @@ public class DemoApplication {
 			});
 		};
 	}
+	@Profile("prod")
+	@Bean
+	CommandLineRunner initDataAdmin(MemberRepository memberRepository,
+							   PasswordEncoder passwordEncoder) {
+
+		return (args)->{
+			memberRepository.save(Member.builder()
+					.username("admin")
+					.password(passwordEncoder.encode("1234"))
+					.MemberName("관리자")
+					.phoneNumber("010-1234-1234")
+					.roleSet(Collections.singleton(MemberRole.ADMIN))
+					.status(MemberStatus.ACTIVE)
+					.build());
+
+			};
+		}
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
