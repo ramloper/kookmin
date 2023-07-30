@@ -32,10 +32,10 @@ public class RentalController {
             rentalService.rentalSave(dto);
         } catch (Exception e) {
             redirect.addFlashAttribute("error", "failSave");
-            return "redirect:/main/main";
+            return "redirect:/main";
         }
         redirect.addFlashAttribute("result", "success");
-        return "redirect:/main/main";
+        return "redirect:/main";
     }
 
     @PostMapping("/delete")

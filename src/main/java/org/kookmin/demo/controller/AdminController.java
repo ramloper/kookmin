@@ -65,16 +65,15 @@ public class AdminController {
     @PostMapping("/education/day/update/rental")
     public String updateDayRental(@ModelAttribute EducationDaySaveDTO dto){
         dayOfWeekService.updateDayRental(dto);
+
         return "redirect:/admin/page";
     }
 
     @PostMapping("/ok")
     public String rentalOk(Integer id, Model model){
         rentalService.okRental(id);
-        List<Rental> list = rentalService.rentalList();
 
-        model.addAttribute("list", list);
-        return "admin/admin";
+        return "redirect:/admin/page";
     }
 
     @GetMapping("/page")

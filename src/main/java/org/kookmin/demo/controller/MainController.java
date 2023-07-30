@@ -2,9 +2,11 @@ package org.kookmin.demo.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.kookmin.demo.domain.DayOfWeek;
 import org.kookmin.demo.domain.Education;
 import org.kookmin.demo.dto.request.education.EducationSearchDTO;
 import org.kookmin.demo.dto.request.member.MemberLoginDTO;
+import org.kookmin.demo.service.DayOfWeekService;
 import org.kookmin.demo.service.EducationService;
 import org.kookmin.demo.service.RentalService;
 import org.springframework.data.domain.Page;
@@ -24,6 +26,7 @@ public class MainController {
 
     private final EducationService educationService;
     private final RentalService rentalService;
+    private final DayOfWeekService dayOfWeekService;
 
     @GetMapping("")
     public String main(Model model, @RequestParam(defaultValue = "0") int page){
@@ -36,6 +39,11 @@ public class MainController {
         model.addAttribute("educationPage", educationPage);
         LocalDate nextThursday = rentalService.returnDay();
         model.addAttribute("nextThursday", nextThursday);
+
+        DayOfWeek dayOfWeekRental = dayOfWeekService.findByDayOfWeekRental();
+        model.addAttribute("dayOfWeekRental", dayOfWeekRental);
+        DayOfWeek dayOfWeekReturn = dayOfWeekService.findByDayOfWeekReturn();
+        model.addAttribute("dayOfWeekReturn", dayOfWeekReturn);
         return "main/main";
     }
 

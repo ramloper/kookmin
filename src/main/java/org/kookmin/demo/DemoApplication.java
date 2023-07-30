@@ -35,9 +35,12 @@ public class DemoApplication {
 
 		return (args)->{
 			dayOfWeekRepository.save(DayOfWeek.builder()
-							.id(1)
-							.thursDay(true)
-							.tuesDay(false)
+					.id(1)
+					.monDay(false)
+					.tuesDay(true)
+					.wednesDay(false)
+					.thursDay(true)
+					.friDay(false)
 					.build());
 			dayOfWeekRepository.save(DayOfWeek.builder()
 					.id(2)

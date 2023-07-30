@@ -38,7 +38,10 @@ public class DayOfWeek {
         this.setFriDay(dto.isFriDay());
     }
     public void updateReturnDTO(EducationDaySaveDTO dto) {
+        this.setMonDay(dto.isMonDay());
         this.setTuesDay(dto.isTuesDay());
+        this.setWednesDay(dto.isWednesDay());
         this.setThursDay(dto.isThursDay());
+        this.setFriDay(dto.isFriDay());
     }
 }

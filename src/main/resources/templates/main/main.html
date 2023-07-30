@@ -1,8 +1,8 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-        lang="ko">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns="http://www.w3.org/1999/html"
+      lang="ko">
   <head>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <meta charset="utf-8">
@@ -11,8 +11,9 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.84.0">
     <title>Kookmin</title>
-
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/album/">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.standalone.min.css">
     <script layout:fragment="script" th:inline="javascript">
       const auth = [[${#authentication.principal}]]
       const errors = [[${errors}]]
@@ -24,9 +25,6 @@
         alert("저장 실패")
       }
     </script>
-
-
-
 
 
     <!-- Bootstrap core CSS -->
@@ -51,7 +49,9 @@
     
   </head>
   <body>
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.kr.min.js"></script>
   <header class="p-3 mb-3 border-bottom">
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -116,20 +116,27 @@
                 <div class="btn-group">
 
                   <!-- Button trigger modal -->
-                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myLargeModal">
                     Rental
                   </button>
 
                   <!-- Modal -->
-                  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
+                  <div class="modal fade" id="myLargeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
                           <h1 class="modal-title fs-5" id="exampleModalLabel" th:text="${education.getBookName()}">title</h1>
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                          반납일자 : <span th:text="${nextThursday}"></span>
+                          <div>
+                            <p>대여일</p>
+                            <input type="text" id="datepickerRental">
+                          </div>
+                          <div>
+                            <p>반납일</p>
+                            <input type="text" id="datepickerReturn">
+                          </div>
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -138,11 +145,68 @@
                             <input type="hidden" name="memberId" th:value="${#authentication.name}" />
                             <button type="submit" class="btn btn-primary">Rental</button>
                           </form>
-
                         </div>
                       </div>
                     </div>
                   </div>
+                  <script th:inline="javascript">
+                    var dayOfWeekRental = /*[[${dayOfWeekRental}]]*/ {};
+
+                  </script>
+                  <script>
+                    $(document).ready(function() {
+
+                      // Datepicker 초기화
+                      $('#datepickerRental').datepicker({
+                        format: 'yyyy-mm-dd', // 날짜 형식 설정
+                        language : "kr",
+                        daysOfWeekDisabled: getDisabledDays(dayOfWeekRental), // 선택 불가능한 요일 설정 (일요일, 토요일 제외)
+                        startDate: new Date(), // 오늘 이전 날짜 선택 불가능하도록 설정
+                        autoclose: true // 선택한 날짜 선택창이 자동으로 닫히도록 설정
+                      });
+                    });
+                    function getDisabledDays(dayOfWeekRental) {
+                      var disabledDays = [];
+                      if (!dayOfWeekRental.monDay) disabledDays.push(1);
+                      if (!dayOfWeekRental.tuesDay) disabledDays.push(2);
+                      if (!dayOfWeekRental.wednesDay) disabledDays.push(3);
+                      if (!dayOfWeekRental.thursDay) disabledDays.push(4);
+                      if (!dayOfWeekRental.friDay) disabledDays.push(5);
+                      if (!dayOfWeekRental.saturDay) disabledDays.push(6);
+                      if (!dayOfWeekRental.sunDay) disabledDays.push(0);
+                      return disabledDays.join(",");
+                    }
+                  </script>
+                  <script th:inline="javascript">
+                    var dayOfWeekReturn = /*[[${dayOfWeekReturn}]]*/ {};
+                    var date = new Date();
+                    const days = 14
+                    date.setDate(date.getDate() + days)
+                  </script>
+                  <script>
+                    $(document).ready(function() {
+                      // Datepicker 초기화
+                      $('#datepickerReturn').datepicker({
+                        format: 'yyyy-mm-dd', // 날짜 형식 설정
+                        language : "kr",
+                        daysOfWeekDisabled: getDisabledDays(dayOfWeekReturn), // 선택 불가능한 요일 설정 (일요일, 토요일 제외)
+                       endDate: '+15d',
+                        startDate: new Date(), // 오늘 이전 날짜 선택 불가능하도록 설정
+                        autoclose: true // 선택한 날짜 선택창이 자동으로 닫히도록 설정
+                      });
+                    });
+                    function getDisabledDays(dayOfWeekReturn) {
+                      var disabledDays = [];
+                      if (!dayOfWeekReturn.monDay) disabledDays.push(1);
+                      if (!dayOfWeekReturn.tuesDay) disabledDays.push(2);
+                      if (!dayOfWeekReturn.wednesDay) disabledDays.push(3);
+                      if (!dayOfWeekReturn.thursDay) disabledDays.push(4);
+                      if (!dayOfWeekReturn.friDay) disabledDays.push(5);
+                      if (!dayOfWeekReturn.saturDay) disabledDays.push(6);
+                      if (!dayOfWeekReturn.sunDay) disabledDays.push(0);
+                      return disabledDays.join(",");
+                    }
+                  </script>
                   <button type="button" class="btn btn-sm btn-outline-secondary" th:text="${education.getBookName()}">...</button>
                 </div>
                 <small class="text-muted"><button onclick="window.open('/main')" type="button" class="btn btn-sm btn-outline-secondary">더 보기</button></small>
@@ -181,17 +245,5 @@
     <p class="mb-0">New to Bootstrap? <a href="/static">Visit the homepage</a> or read our <a href="../getting-started/introduction/">getting started guide</a>.</p>
   </div>
 </footer>
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-  const myModal = document.getElementById('myModal')
-  const myInput = document.getElementById('myInput')
-
-  myModal.addEventListener('shown.bs.modal', () => {
-    myInput.focus()
-  })
-</script>
-
-      
   </body>
 </html>
