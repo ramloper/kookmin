@@ -151,7 +151,7 @@
                   </div>
                   <script th:inline="javascript">
                     var dayOfWeekRental = /*[[${dayOfWeekRental}]]*/ {};
-
+                    var date = new date();
                   </script>
                   <script>
                     $(document).ready(function() {
@@ -163,6 +163,11 @@
                         daysOfWeekDisabled: getDisabledDays(dayOfWeekRental), // 선택 불가능한 요일 설정 (일요일, 토요일 제외)
                         startDate: new Date(), // 오늘 이전 날짜 선택 불가능하도록 설정
                         autoclose: true // 선택한 날짜 선택창이 자동으로 닫히도록 설정
+
+                      }).on('changeDate', function (e){
+                        console.log(e.format());
+                        date = e;
+                        console.log(date.format())
                       });
                     });
                     function getDisabledDays(dayOfWeekRental) {
@@ -179,9 +184,7 @@
                   </script>
                   <script th:inline="javascript">
                     var dayOfWeekReturn = /*[[${dayOfWeekReturn}]]*/ {};
-                    var date = new Date();
-                    const days = 14
-                    date.setDate(date.getDate() + days)
+
                   </script>
                   <script>
                     $(document).ready(function() {
@@ -190,7 +193,7 @@
                         format: 'yyyy-mm-dd', // 날짜 형식 설정
                         language : "kr",
                         daysOfWeekDisabled: getDisabledDays(dayOfWeekReturn), // 선택 불가능한 요일 설정 (일요일, 토요일 제외)
-                       endDate: '+15d',
+                        endDate: date,
                         startDate: new Date(), // 오늘 이전 날짜 선택 불가능하도록 설정
                         autoclose: true // 선택한 날짜 선택창이 자동으로 닫히도록 설정
                       });

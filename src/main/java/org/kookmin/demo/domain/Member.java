@@ -5,6 +5,7 @@ import org.kookmin.demo.common.MemberRole;
 import org.kookmin.demo.common.MemberStatus;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -21,6 +22,13 @@ public class Member extends BaseEntity{
 
     @Id
     private String username; // 학번
+
+    public Member(String username, String password, String memberName, String phoneNumber) {
+        this.username = username;
+        this.password = password;
+        this.MemberName = memberName;
+        this.phoneNumber = phoneNumber;
+    }
 
     @Column(columnDefinition = "TEXT")
     private String password;
