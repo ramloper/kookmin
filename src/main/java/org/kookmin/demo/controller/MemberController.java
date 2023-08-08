@@ -57,6 +57,8 @@ public class MemberController {
     public String detailMember(Model model){
         List<Member> memberList = memberService.findAllMember();
         model.addAttribute("memberList", memberList);
+        List<Rental> rentalList = rentalService.rentalListReserved();
+        model.addAttribute("rentalList", rentalList);
         return "user/userlist";
     }
     @GetMapping("/member/info")

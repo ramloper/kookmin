@@ -44,8 +44,13 @@ public class RentalServiceImpl implements RentalService {
     }
 
     @Override
-    public List<Rental> rentalList() {
+    public List<Rental> rentalListWaiting() {
         List<Rental> rentalList = rentalRepository.findAllByStatus(RentalStatus.WAITING);
+        return rentalList;
+    }
+
+    public List<Rental> rentalListReserved() {
+        List<Rental> rentalList = rentalRepository.findAllByStatus(RentalStatus.RESERVED);
         return rentalList;
     }
     @Override
@@ -77,5 +82,12 @@ public class RentalServiceImpl implements RentalService {
                 .build();
         smsService.sendSms(messageDTO);
         rental.setStatus(RentalStatus.RESERVED);
+    }
+
+    public LocalDate returnDay(){
+        /**
+         * 예상 반납일자 로직 구상해서 구현 예정
+         * */
+        return null;
     }
 }

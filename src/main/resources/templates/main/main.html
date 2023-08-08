@@ -60,7 +60,7 @@
         </a>
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="/main" class="nav-link px-2 link-secondary">Home</a></li>
+          <li><a href="/main" class="nav-link px-2 link-secondary">메인 화면</a></li>
           <li><a sec:authorize="hasRole('ADMIN')" href="/admin/page" class="nav-link px-2 link-body-emphasis">관리자 페이지</a></li>
           <li><a sec:authorize="hasRole('USER')" href="/user/page" class="nav-link px-2 link-body-emphasis">마이 페이지</a></li>
           <li><a href="#" class="nav-link px-2 link-body-emphasis">공지</a></li>
@@ -69,7 +69,7 @@
 
 
         <form th:action="@{/logout}" method="POST" sec:authorize="isAuthenticated()">
-          <button type="submit" class="btn btn-outline-dark">logout</button>
+          <button type="submit" class="btn btn-outline-dark">로그아웃</button>
         </form>
       </div>
     </div>
@@ -117,7 +117,7 @@
 
                   <!-- Button trigger modal -->
                   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myLargeModal">
-                    Rental
+                    대여
                   </button>
 
                   <!-- Modal -->
@@ -139,13 +139,13 @@
                           </div>
                         </div>
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                           <form action="/rental/save" method="post">
                             <input type="hidden" name="educationId" th:value="${education.getId()}" />
                             <input type="hidden" name="memberId" th:value="${#authentication.name}" />
                             <input type="hidden" id="rentalDate" name="rentalDate">
                             <input type="hidden" id="returnDate" name="returnDate">
-                            <button type="submit" class="btn btn-primary">Rental</button>
+                            <button type="submit" class="btn btn-primary">대여</button>
                           </form>
                         </div>
                       </div>
@@ -166,10 +166,24 @@
                         startDate: new Date(), // 오늘 이전 날짜 선택 불가능하도록 설정
                         autoclose: true // 선택한 날짜 선택창이 자동으로 닫히도록 설정
 
-                      }).on('changeDate', function (e){
-                        console.log(e.format());
-                        date = e;
-                        console.log(date.format())
+                      })
+                    });
+                    // Rental 날짜 선택 시 반납일 선택 가능하도록 처리
+                    $('#datepickerRental').on('change', function() {
+                      var rentalDate = new Date($(this).val());
+                      rentalDate.setDate(rentalDate.getDate() + 14); // 대여일로부터 2주 뒤
+
+                      // Datepicker 초기화 (반납일)
+                      $('#datepickerReturn').datepicker('remove'); // 기존 Datepicker 초기화
+                      $('#datepickerReturn').val(''); // 기존 반납일 데이터 초기화
+                      $('#datepickerReturn').prop('disabled', false); // 반납일 입력 가능하도록 활성화
+
+                      $('#datepickerReturn').datepicker({
+                        format: 'yyyy-mm-dd',
+                        language: 'kr',
+                        daysOfWeekDisabled: getDisabledDays(dayOfWeekReturn),
+                        endDate: rentalDate, // 대여일로부터 2주 뒤부터 선택 가능
+                        autoclose: true
                       });
                     });
                     $('.btn-primary').click(function() {
@@ -177,6 +191,11 @@
                       var rentalDate = $('#datepickerRental').val();
                       // 숨겨진 input 태그에 선택한 날짜들을 설정
                       $('#rentalDate').val(rentalDate);
+
+                      // 반납일 선택한 날짜
+                      var returnDate = $('#datepickerReturn').val();
+                      // 숨겨진 input 태그에 선택한 날짜들을 설정
+                      $('#returnDate').val(returnDate);
                     });
                     function getDisabledDays(dayOfWeekRental) {
                       var disabledDays = [];
@@ -193,36 +212,6 @@
                   <script th:inline="javascript">
                     var dayOfWeekReturn = /*[[${dayOfWeekReturn}]]*/ {};
 
-                  </script>
-                  <script>
-                    $(document).ready(function() {
-                      // Datepicker 초기화
-                      $('#datepickerReturn').datepicker({
-                        format: 'yyyy-mm-dd', // 날짜 형식 설정
-                        language : "kr",
-                        daysOfWeekDisabled: getDisabledDays(dayOfWeekReturn), // 선택 불가능한 요일 설정 (일요일, 토요일 제외)
-                        endDate: date,
-                        startDate: new Date(), // 오늘 이전 날짜 선택 불가능하도록 설정
-                        autoclose: true // 선택한 날짜 선택창이 자동으로 닫히도록 설정
-                      });
-                    });
-                    $('.btn-primary').click(function() {
-                      // 반납일 선택한 날짜
-                      var returnDate = $('#datepickerReturn').val();
-                      // 숨겨진 input 태그에 선택한 날짜들을 설정
-                      $('#returnDate').val(returnDate);
-                    });
-                    function getDisabledDays(dayOfWeekReturn) {
-                      var disabledDays = [];
-                      if (!dayOfWeekReturn.monDay) disabledDays.push(1);
-                      if (!dayOfWeekReturn.tuesDay) disabledDays.push(2);
-                      if (!dayOfWeekReturn.wednesDay) disabledDays.push(3);
-                      if (!dayOfWeekReturn.thursDay) disabledDays.push(4);
-                      if (!dayOfWeekReturn.friDay) disabledDays.push(5);
-                      if (!dayOfWeekReturn.saturDay) disabledDays.push(6);
-                      if (!dayOfWeekReturn.sunDay) disabledDays.push(0);
-                      return disabledDays.join(",");
-                    }
                   </script>
                   <button type="button" class="btn btn-sm btn-outline-secondary" th:text="${education.getBookName()}">...</button>
                 </div>
@@ -258,8 +247,6 @@
     <p class="float-end mb-1">
       <a href="#">Back to top</a>
     </p>
-    <p class="mb-1">Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
-    <p class="mb-0">New to Bootstrap? <a href="/static">Visit the homepage</a> or read our <a href="../getting-started/introduction/">getting started guide</a>.</p>
   </div>
 </footer>
   </body>

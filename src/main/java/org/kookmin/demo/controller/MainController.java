@@ -30,15 +30,14 @@ public class MainController {
 
     @GetMapping("")
     public String main(Model model, @RequestParam(defaultValue = "0") int page){
-        int pageSize = 10; // 페이지당 항목 수
+        int pageSize = 12; // 페이지당 항목 수
         PageRequest pageable = PageRequest.of(page, pageSize);
         Page<Education> educationPage = educationService.findAllPage(pageable);
 
         List<Education> educationList = educationPage.getContent();
         model.addAttribute("educationList", educationList);
         model.addAttribute("educationPage", educationPage);
-        LocalDate nextThursday = rentalService.returnDay();
-        model.addAttribute("nextThursday", nextThursday);
+
 
         DayOfWeek dayOfWeekRental = dayOfWeekService.findByDayOfWeekRental();
         model.addAttribute("dayOfWeekRental", dayOfWeekRental);
@@ -51,7 +50,7 @@ public class MainController {
     public String educationSearch(EducationSearchDTO dto,
                                   @RequestParam(defaultValue = "0") int page,
                                   Model model){
-        int pageSize = 10; // 페이지당 항목 수
+        int pageSize = 12; // 페이지당 항목 수
         PageRequest pageable = PageRequest.of(page, pageSize);
 
         Page<Education> educationPage = educationService.findAllSearchType(dto, pageable);
@@ -59,8 +58,7 @@ public class MainController {
         List<Education> educationList = educationPage.getContent();
         model.addAttribute("educationList", educationList);
         model.addAttribute("educationPage", educationPage);
-        LocalDate nextThursday = rentalService.returnDay();
-        model.addAttribute("nextThursday", nextThursday);
+
         return "main/main";
     }
 }

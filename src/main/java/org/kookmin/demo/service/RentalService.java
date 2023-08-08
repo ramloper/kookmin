@@ -1,8 +1,6 @@
 package org.kookmin.demo.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.kookmin.demo.domain.Education;
-import org.kookmin.demo.domain.Member;
 import org.kookmin.demo.domain.Rental;
 import org.kookmin.demo.dto.request.rental.RentalSaveDTO;
 
@@ -19,7 +17,9 @@ public interface RentalService {
 
     Rental rentalDetail();
 
-    List<Rental> rentalList();
+    List<Rental> rentalListWaiting();
+
+    List<Rental> rentalListReserved();
 
     List<Rental> myRentalList(String username);
 

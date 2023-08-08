@@ -83,7 +83,7 @@ public class AdminController {
 
     @GetMapping("/page")
     public String adminPage(Model model){
-        List<Rental> list = rentalService.rentalList();
+        List<Rental> list = rentalService.rentalListWaiting();
         model.addAttribute("list", list);
         DayOfWeek dayOfWeekReturn = dayOfWeekService.findByDayOfWeekReturn();
         DayOfWeek dayOfWeekRental = dayOfWeekService.findByDayOfWeekRental();

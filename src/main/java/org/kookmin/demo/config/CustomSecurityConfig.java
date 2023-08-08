@@ -40,6 +40,7 @@ public class CustomSecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/main/**").authenticated()
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/user/list").access("hasRole('ROLE_ADMIN')")
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()

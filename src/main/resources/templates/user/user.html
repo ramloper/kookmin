@@ -159,7 +159,7 @@
                             <h6 class="my-0" th:text="${rental.member.getUsername()}">Student Id</h6>
                             <h6 class="my-0" th:text="${rental.getStatus()}">출판사</h6>
                             <h6 class="my-0" th:text="${rental.getCreatedAt()}">신청일</h6>
-                            <small class="text-body-secondary">Brief description</small>
+
                         </div>
                         <span class="text-body-secondary">
               <form action="/rental/delete" method="post">
@@ -169,13 +169,6 @@
             </span>
                     </li>
                 </ul>
-
-                <form class="card p-2">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Promo code">
-                        <button type="submit" class="btn btn-secondary">Redeem</button>
-                    </div>
-                </form>
             </div>
             <div class="col-md-7 col-lg-8">
                 <h4 class="mb-3">정보 수정</h4>
@@ -204,13 +197,12 @@
         </div>
     </main>
 
-    <footer class="my-5 pt-5 text-body-secondary text-center text-small">
-        <p class="mb-1">&copy; 2017–2023 Company Name</p>
-        <ul class="list-inline">
-            <li class="list-inline-item"><a href="#">Privacy</a></li>
-            <li class="list-inline-item"><a href="#">Terms</a></li>
-            <li class="list-inline-item"><a href="#">Support</a></li>
-        </ul>
+    <footer class="text-muted py-5">
+        <div class="container">
+            <p class="float-end mb-1">
+                <a href="#">Back to top</a>
+            </p>
+        </div>
     </footer>
 </div>
 

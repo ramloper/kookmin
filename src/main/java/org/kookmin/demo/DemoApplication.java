@@ -62,7 +62,7 @@ public class DemoApplication {
 					.username("user")
 					.password(passwordEncoder.encode("1234"))
 					.MemberName("유저")
-					.phoneNumber("010-1234-1234")
+					.phoneNumber("01012341234")
 					.roleSet(Collections.singleton(MemberRole.USER))
 					.status(MemberStatus.ACTIVE)
 					.build());
@@ -72,7 +72,7 @@ public class DemoApplication {
 						.username("J202233"+value)
 						.password(passwordEncoder.encode("1234"))
 						.MemberName("유저이름"+value)
-						.phoneNumber("010-1234-1234")
+						.phoneNumber("01012341234")
 						.roleSet(Collections.singleton(MemberRole.USER))
 						.status(MemberStatus.ACTIVE)
 						.build());
@@ -91,13 +91,25 @@ public class DemoApplication {
 			});
 
 
-			IntStream.rangeClosed(1, 10).forEach(value -> {
+			IntStream.rangeClosed(1, 5).forEach(value -> {
 				rentalRepository.save(Rental.builder()
 						.id(value)
 						.member(member)
 						.education(educationRepository.findById(value).orElseThrow())
-						.returnDate("2023-10-10")
+						.rentalDate("2023-08-10")
+						.returnDate("2023-08-21")
 						.status(RentalStatus.WAITING)
+						.build());
+
+			});
+			IntStream.rangeClosed(6, 10).forEach(value -> {
+				rentalRepository.save(Rental.builder()
+						.id(value)
+						.member(member)
+						.education(educationRepository.findById(value).orElseThrow())
+						.rentalDate("2023-08-10")
+						.returnDate("2023-08-21")
+						.status(RentalStatus.RESERVED)
 						.build());
 
 			});
