@@ -143,6 +143,8 @@
                           <form action="/rental/save" method="post">
                             <input type="hidden" name="educationId" th:value="${education.getId()}" />
                             <input type="hidden" name="memberId" th:value="${#authentication.name}" />
+                            <input type="hidden" id="rentalDate" name="rentalDate">
+                            <input type="hidden" id="returnDate" name="returnDate">
                             <button type="submit" class="btn btn-primary">Rental</button>
                           </form>
                         </div>
@@ -169,6 +171,12 @@
                         date = e;
                         console.log(date.format())
                       });
+                    });
+                    $('.btn-primary').click(function() {
+                      // 반납일 선택한 날짜
+                      var rentalDate = $('#datepickerRental').val();
+                      // 숨겨진 input 태그에 선택한 날짜들을 설정
+                      $('#rentalDate').val(rentalDate);
                     });
                     function getDisabledDays(dayOfWeekRental) {
                       var disabledDays = [];
@@ -197,6 +205,12 @@
                         startDate: new Date(), // 오늘 이전 날짜 선택 불가능하도록 설정
                         autoclose: true // 선택한 날짜 선택창이 자동으로 닫히도록 설정
                       });
+                    });
+                    $('.btn-primary').click(function() {
+                      // 반납일 선택한 날짜
+                      var returnDate = $('#datepickerReturn').val();
+                      // 숨겨진 input 태그에 선택한 날짜들을 설정
+                      $('#returnDate').val(returnDate);
                     });
                     function getDisabledDays(dayOfWeekReturn) {
                       var disabledDays = [];

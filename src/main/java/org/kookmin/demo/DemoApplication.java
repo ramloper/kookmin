@@ -54,7 +54,7 @@ public class DemoApplication {
 					.username("admin")
 					.password(passwordEncoder.encode("1234"))
 					.MemberName("관리자")
-					.phoneNumber("010-1234-1234")
+					.phoneNumber("01094333753")
 					.roleSet(Collections.singleton(MemberRole.ADMIN))
 					.status(MemberStatus.ACTIVE)
 					.build());
@@ -96,6 +96,7 @@ public class DemoApplication {
 						.id(value)
 						.member(member)
 						.education(educationRepository.findById(value).orElseThrow())
+						.returnDate("2023-10-10")
 						.status(RentalStatus.WAITING)
 						.build());
 

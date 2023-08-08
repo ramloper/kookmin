@@ -13,11 +13,15 @@ public class RentalSaveDTO {
 
     private Integer educationId;
     private String memberId;
+    private String returnDate;
+    private String rentalDate;
 
     public Rental toEntity(Member member, Education education){
         return Rental.builder()
                 .education(education)
                 .member(member)
+                .returnDate(returnDate)
+                .rentalDate(rentalDate)
                 .status(RentalStatus.WAITING)
                 .build();
     }

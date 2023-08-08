@@ -1,5 +1,6 @@
 package org.kookmin.demo.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.kookmin.demo.domain.DayOfWeek;
 import org.kookmin.demo.domain.Rental;
@@ -20,6 +21,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 @Controller
@@ -70,7 +75,7 @@ public class AdminController {
     }
 
     @PostMapping("/ok")
-    public String rentalOk(Integer id, Model model){
+    public String rentalOk(Integer id, Model model) throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
         rentalService.okRental(id);
 
         return "redirect:/admin/page";

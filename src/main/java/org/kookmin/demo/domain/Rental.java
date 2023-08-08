@@ -27,4 +27,8 @@ public class Rental extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.LAZY)
     private DayOfWeek dayOfWeek;
+
+    private String returnDate;
+
+    private String rentalDate;
 }

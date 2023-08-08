@@ -45,7 +45,7 @@ public class SmsService {
         String space = " ";                    // one space
         String newLine = "\n";                    // new line
         String method = "POST";                    // method
-        String url = "/admin/sms";    // url (include query string)
+        String url = "/sms/v2/services/" + serviceId + "/messages";    // url (include query string)
 
         String timestamp = time.toString();            // current timestamp (epoch)
         String accessKey = this.accessKey;            // access key id (from portal or Sub Account)
