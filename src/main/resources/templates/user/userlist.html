@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.111.3">
-    <title>Checkout example · Bootstrap v5.3</title>
+    <title>UserList</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/checkout/">
 
@@ -71,26 +71,6 @@
             white-space: nowrap;
             -webkit-overflow-scrolling: touch;
         }
-
-        .btn-bd-primary {
-            --bd-violet-bg: #712cf9;
-            --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
-
-            --bs-btn-font-weight: 600;
-            --bs-btn-color: var(--bs-white);
-            --bs-btn-bg: var(--bd-violet-bg);
-            --bs-btn-border-color: var(--bd-violet-bg);
-            --bs-btn-hover-color: var(--bs-white);
-            --bs-btn-hover-bg: #6528e0;
-            --bs-btn-hover-border-color: #6528e0;
-            --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
-            --bs-btn-active-color: var(--bs-btn-hover-color);
-            --bs-btn-active-bg: #5a23c8;
-            --bs-btn-active-border-color: #5a23c8;
-        }
-        .bd-mode-toggle {
-            z-index: 1500;
-        }
     </style>
 
 
@@ -111,7 +91,7 @@
                 <li><a href="/main" class="nav-link px-2 link-secondary">Home</a></li>
                 <li><a sec:authorize="hasRole('ADMIN')" href="/admin/page" class="nav-link px-2 link-body-emphasis">관리자 페이지</a></li>
                 <li><a sec:authorize="hasRole('USER')" href="/user/page" class="nav-link px-2 link-body-emphasis">마이 페이지</a></li>
-                <li><a href="#" class="nav-link px-2 link-body-emphasis">공지</a></li>
+                <li><a sec:authorize="hasRole('ADMIN')" href="/admin/notification" class="nav-link px-2 link-body-emphasis">공지</a></li>
             </ul>
             <form th:action="@{/logout}" method="POST" sec:authorize="isAuthenticated()">
                 <button type="submit" class="btn btn-outline-dark">logout</button>
@@ -172,6 +152,10 @@
                                 <h6 class="my-0" th:text="${rental.member.getPhoneNumber()}">PhoneNumber</h6>
                                 <h6 class="my-0" th:text="${rental.getRentalDate()}">PhoneNumber</h6>
                                 <h6 class="my-0" th:text="${rental.getReturnDate()}">PhoneNumber</h6>
+                                <form action="/admin/return" method="post">
+                                    <input type="hidden" name="educationId" th:value="${rental.education.getId()}" />
+                                    <button type="submit" class="btn btn-primary">반납</button>
+                                </form>
                             </div>
                         </li>
                     </ul>

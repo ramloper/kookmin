@@ -1,19 +1,21 @@
 package org.kookmin.demo.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.kookmin.demo.common.EducationStatus;
+import org.kookmin.demo.common.RentalStatus;
 import org.kookmin.demo.domain.Education;
+import org.kookmin.demo.domain.Rental;
 import org.kookmin.demo.dto.request.education.EducationModifyDTO;
 import org.kookmin.demo.dto.request.education.EducationSaveDTO;
 import org.kookmin.demo.dto.request.education.EducationSearchDTO;
 import org.kookmin.demo.dto.response.EducationResponseDTO;
 import org.kookmin.demo.repository.EducationRepository;
+import org.kookmin.demo.repository.RentalRepository;
 import org.kookmin.demo.service.EducationService;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -22,10 +24,26 @@ import java.util.List;
 public class EducationServiceImpl implements EducationService {
 
     private final EducationRepository educationRepository;
+    private final RentalRepository rentalRepository;
 
     @Override
     public void saveEducation(EducationSaveDTO dto) {
         educationRepository.save(dto.toEntity());
+
+
+        dto.getFile();
+    }
+
+    @Override
+    @Transactional
+    public void returnEducation(Integer id){
+        Rental rental = rentalRepository.findById(id).orElseThrow();
+        rental.setStatus(RentalStatus.WAITING);
+        Education education = educationRepository.findById(rental.getEducation().getId()).orElseThrow();
+        education.setStatus(EducationStatus.AVAILABLE);
+
+
+
     }
 
     @Override
@@ -36,7 +54,7 @@ public class EducationServiceImpl implements EducationService {
 
     @Override
     public Page<Education> findAllPage(Pageable pageable){
-        Page<Education> list = educationRepository.findAllByEducationPage(pageable);
+        Page<Education> list = educationRepository.findAllByEducationPage(pageable, EducationStatus.AVAILABLE);
 
         return list;
     }

@@ -2,6 +2,7 @@ package org.kookmin.demo.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
+import org.kookmin.demo.common.EducationStatus;
 import org.kookmin.demo.common.RentalStatus;
 import org.kookmin.demo.domain.Education;
 import org.kookmin.demo.domain.Member;
@@ -35,6 +36,7 @@ public class RentalServiceImpl implements RentalService {
     public void rentalSave(RentalSaveDTO dto) {
         Member member = memberRepository.findById(dto.getMemberId()).orElseThrow();
         Education education = educationRepository.findById(dto.getEducationId()).orElseThrow();
+        education.setStatus(EducationStatus.UNAVAILABLE);
         rentalRepository.save(dto.toEntity(member, education));
     }
 

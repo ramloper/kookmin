@@ -4,8 +4,8 @@ package org.kookmin.demo.dto.request.education;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.kookmin.demo.common.EducationStatus;
 import org.kookmin.demo.domain.Education;
-import org.kookmin.demo.domain.EducationImage;
 import org.springframework.web.multipart.MultipartFile;
 
 @Getter
@@ -22,13 +22,19 @@ public class EducationSaveDTO {
 
     private MultipartFile file;
 
+    private String uploadFileName;
+
+    private String originFileName;
+
     public Education toEntity() {
         return Education.builder()
                 .writer(writer)
                 .translator(translator)
                 .bookName(bookName)
                 .publisher(publisher)
-                .fileName(file.getOriginalFilename())
+                .uploadFileName(uploadFileName)
+                .originFileName(originFileName)
+                .status(EducationStatus.AVAILABLE)
                 .build();
     }
 }

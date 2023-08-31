@@ -16,6 +16,8 @@ public interface EducationService {
 
     void saveEducation(EducationSaveDTO dto);
 
+    void returnEducation(Integer id);
+
     List<Education> findAllEducation();
 
     Page<Education> findAllPage(Pageable pageable);

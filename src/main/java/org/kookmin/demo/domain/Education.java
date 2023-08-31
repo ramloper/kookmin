@@ -27,14 +27,11 @@ public class Education extends BaseEntity{
 
     private String translator;
 
-    private String fileName;
+    private String uploadFileName;
+
+    private String originFileName;
 
     private EducationStatus status;
-
-
-
-    @OneToOne
-    private EducationImage image;
 
     @OneToMany(mappedBy = "education")
     @Builder.Default

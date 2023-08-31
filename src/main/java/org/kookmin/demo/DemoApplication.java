@@ -4,14 +4,8 @@ import org.kookmin.demo.common.EducationStatus;
 import org.kookmin.demo.common.MemberRole;
 import org.kookmin.demo.common.MemberStatus;
 import org.kookmin.demo.common.RentalStatus;
-import org.kookmin.demo.domain.DayOfWeek;
-import org.kookmin.demo.domain.Education;
-import org.kookmin.demo.domain.Member;
-import org.kookmin.demo.domain.Rental;
-import org.kookmin.demo.repository.DayOfWeekRepository;
-import org.kookmin.demo.repository.EducationRepository;
-import org.kookmin.demo.repository.MemberRepository;
-import org.kookmin.demo.repository.RentalRepository;
+import org.kookmin.demo.domain.*;
+import org.kookmin.demo.repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -31,6 +25,7 @@ public class DemoApplication {
 							   DayOfWeekRepository dayOfWeekRepository,
 							   EducationRepository educationRepository,
 							   RentalRepository rentalRepository,
+							   NotificationRepository notificationRepository,
 							   PasswordEncoder passwordEncoder) {
 
 		return (args)->{
@@ -62,7 +57,7 @@ public class DemoApplication {
 					.username("user")
 					.password(passwordEncoder.encode("1234"))
 					.MemberName("유저")
-					.phoneNumber("01012341234")
+					.phoneNumber("01089361166")
 					.roleSet(Collections.singleton(MemberRole.USER))
 					.status(MemberStatus.ACTIVE)
 					.build());
@@ -77,12 +72,24 @@ public class DemoApplication {
 						.status(MemberStatus.ACTIVE)
 						.build());
 			});
-
-			IntStream.rangeClosed(1, 30).forEach(value -> {
+			IntStream.rangeClosed(1, 10).forEach(value -> {
 				educationRepository.save(Education.builder()
 						.id(value)
 						.bookName("미술교육책."+value)
-						.fileName("test.jpg")
+						.originFileName("test11.jpg")
+						.uploadFileName("test11.jpg")
+						.publisher("미진사")
+						.writer("박지혜")
+						.translator("김우람")
+						.status(EducationStatus.UNAVAILABLE)
+						.build());
+			});
+			IntStream.rangeClosed(11, 30).forEach(value -> {
+				educationRepository.save(Education.builder()
+						.id(value)
+						.bookName("미술교육책."+value)
+						.originFileName("12test.jpg")
+						.uploadFileName("12test.jpg")
 						.publisher("미진사")
 						.writer("박지혜")
 						.translator("김우람")
@@ -113,12 +120,23 @@ public class DemoApplication {
 						.build());
 
 			});
+			notificationRepository.save(Notification.builder()
+					.title("testTitle")
+					.content("testContenttestContenttestContenttestContenttestContenttestContenttestContenttestContenttestContenttestContenttestContenttestContent")
+					.aBoolean(true)
+					.build());
+			notificationRepository.save(Notification.builder()
+					.title("testTitle")
+					.content("testContenttestContenttestContenttestContenttestContenttestContenttestContenttestContenttestContenttestContenttestContenttestContent")
+					.aBoolean(false)
+					.build());
 		};
 	}
+
 	@Profile("prod")
 	@Bean
 	CommandLineRunner initDataAdmin(MemberRepository memberRepository,
-							   PasswordEncoder passwordEncoder) {
+									PasswordEncoder passwordEncoder) {
 
 		return (args)->{
 			memberRepository.save(Member.builder()
@@ -130,8 +148,8 @@ public class DemoApplication {
 					.status(MemberStatus.ACTIVE)
 					.build());
 
-			};
-		}
+		};
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);

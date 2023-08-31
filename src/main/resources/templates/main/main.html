@@ -31,6 +31,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <style>
+      .long-text {
+        white-space: normal;
+        word-wrap: break-word;
+      }
+
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
@@ -63,7 +68,6 @@
           <li><a href="/main" class="nav-link px-2 link-secondary">메인 화면</a></li>
           <li><a sec:authorize="hasRole('ADMIN')" href="/admin/page" class="nav-link px-2 link-body-emphasis">관리자 페이지</a></li>
           <li><a sec:authorize="hasRole('USER')" href="/user/page" class="nav-link px-2 link-body-emphasis">마이 페이지</a></li>
-          <li><a href="#" class="nav-link px-2 link-body-emphasis">공지</a></li>
         </ul>
 
 
@@ -76,7 +80,18 @@
   </header>
 
 <main>
-
+  <div class="row mb-1">
+    <div class="col-md-6" th:each="notification : ${notificationList}">
+      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+          <strong class="d-inline-block mb-2 text-primary-emphasis" th:text="${notification.getId()}"></strong>
+          <h3 class="mb-0" th:text="${notification.getTitle()}"></h3>
+          <p class="mb-1 text-body-secondary" th:text="${notification.getCreatedAt()}"></p>
+          <p class="card-text mb-auto long-text" th:text="${notification.getContent()}"></p>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="album py-5 bg-light">
     <div class="container">
@@ -102,7 +117,7 @@
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         <div class="col" th:each="education : ${educationList}">
           <div class="card shadow-sm">
-            <img class="bd-placeholder-img card-img-top" th:src="@{'/image/' + ${education.getFileName()}}" width="100%" height="225" alt="Thumbnail" />
+            <img class="bd-placeholder-img card-img-top" th:src="@{'/image/' + ${education.getUploadFileName()}}" width="100%" height="225" alt="Thumbnail" />
             <div class="card-body">
               <p class="card-text">
                 책이름   <span th:text="${education.getBookName()}"></span></p>
@@ -213,9 +228,9 @@
                     var dayOfWeekReturn = /*[[${dayOfWeekReturn}]]*/ {};
 
                   </script>
-                  <button type="button" class="btn btn-sm btn-outline-secondary" th:text="${education.getBookName()}">...</button>
+
                 </div>
-                <small class="text-muted"><button onclick="window.open('/main')" type="button" class="btn btn-sm btn-outline-secondary">더 보기</button></small>
+<!--        자세히보기 추후 구현        <small class="text-muted"><button onclick="window.open('/main')" type="button" class="btn btn-sm btn-outline-secondary">더 보기</button></small>-->
               </div>
             </div>
           </div>

@@ -2,12 +2,17 @@ package org.kookmin.demo.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.kookmin.demo.domain.DayOfWeek;
+import org.kookmin.demo.domain.Notification;
 import org.kookmin.demo.domain.Rental;
 import org.kookmin.demo.dto.request.education.EducationDaySaveDTO;
 import org.kookmin.demo.dto.request.education.EducationSaveDTO;
+import org.kookmin.demo.dto.request.notification.NotificationRequestDTO;
+import org.kookmin.demo.dto.request.notification.NotificationToMainModifyRequestDTO;
 import org.kookmin.demo.service.DayOfWeekService;
 import org.kookmin.demo.service.EducationService;
+import org.kookmin.demo.service.NotificationService;
 import org.kookmin.demo.service.RentalService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -26,15 +31,19 @@ import java.net.URISyntaxException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/admin")
 @RequiredArgsConstructor
 @PropertySource("classpath:/application-dev.properties")
+@Slf4j
 public class AdminController {
     private final EducationService educationService;
     private final RentalService rentalService;
     private final DayOfWeekService dayOfWeekService;
+    private final NotificationService notificationService;
 
     @Value("${file.path}")
     String savePath;
@@ -47,14 +56,25 @@ public class AdminController {
             try {
                 // 파일 저장 경로
                 // 파일 이름
-                String fileName = file.getOriginalFilename();
+                UUID uuid = UUID.randomUUID();
+                String[] uuids = uuid.toString().split("-");
+                String uniqueName = uuids[0];
                 // 파일 저장
-                file.transferTo(new File(savePath + fileName));
+                String fileName = dto.getFile().getOriginalFilename();
+                String fileExt = fileName.substring(fileName.lastIndexOf("."));
+                File img_File = new File(savePath+"/image/"+uniqueName+fileExt);
+
+                file.transferTo(img_File);
                 // 파일 이름을 DTO에 설정
-                dto.setFile(file);
+                dto.setUploadFileName(uniqueName+fileExt);
+                dto.setOriginFileName(file.getOriginalFilename());
+                log.error("파일 fu path = " + img_File.getPath() + img_File.getName());
+                log.error("파일 uploadName = " + uniqueName);
+
             } catch (IOException e) {
                 // 파일 저장 실패 시 예외 처리
                 e.printStackTrace();
+                log.error("파일 저장실패");
             }
         }
 
@@ -94,5 +114,38 @@ public class AdminController {
         return "admin/admin";
     }
 
+    @PostMapping("/return")
+    public String rentalReturn(Integer educationId){
+        educationService.returnEducation(educationId);
+        return "redirect:/user/list";
+    }
+
+    @GetMapping("/notification")
+    public String notification(Model model){
+        NotificationRequestDTO requestDTO = new NotificationRequestDTO();
+        model.addAttribute("notificationDTO", requestDTO);
+
+        List<Notification> notificationList = notificationService.notificationFindAll();
+        model.addAttribute("notificationList", notificationList);
+
+        return "admin/notification";
+    }
+
+    @PostMapping("/notification/save")
+    public String notification(NotificationRequestDTO dto){
+        notificationService.notificationSave(dto);
+        return "redirect:/admin/notification";
+    }
+
+    @PostMapping("/notification/tomain/post")
+    public String notificationToMainPost(Long id){
+        notificationService.notificationToMainPost(id);
+        return "redirect:/admin/notification";
+    }
+    @PostMapping("/notification/tomain/delete")
+    public String notificationToMainDelete(Long id){
+        notificationService.notificationToMainDelete(id);
+        return "redirect:/admin/notification";
+    }
 
 }

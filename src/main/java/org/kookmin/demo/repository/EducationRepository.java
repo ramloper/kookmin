@@ -1,5 +1,6 @@
 package org.kookmin.demo.repository;
 
+import org.kookmin.demo.common.EducationStatus;
 import org.kookmin.demo.domain.Education;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,9 +17,9 @@ public interface EducationRepository extends JpaRepository<Education, Integer> {
     @Query("select e from Education e join fetch e.rental")
     List<Education> findAllByRental();
 
-    @Query(value = "select e from Education e",
+    @Query(value = "select e from Education e where e.status = :educationStatus",
             countQuery = "select count(e) from Education e")
-    Page<Education> findAllByEducationPage(Pageable pageable);
+    Page<Education> findAllByEducationPage(Pageable pageable, EducationStatus educationStatus);
 
     @Query(value = "select e from Education e where e.bookName = :searchType",
             countQuery = "select count(e) from Education e")
