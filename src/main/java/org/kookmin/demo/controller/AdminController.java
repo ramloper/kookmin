@@ -56,6 +56,7 @@ public class AdminController {
             try {
                 // 파일 저장 경로
                 // 파일 이름
+                String exam = "";
                 UUID uuid = UUID.randomUUID();
                 String[] uuids = uuid.toString().split("-");
                 String uniqueName = uuids[0];
