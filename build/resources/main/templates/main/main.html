@@ -1,0 +1,268 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns="http://www.w3.org/1999/html"
+      lang="ko">
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.84.0">
+    <title>Kookmin</title>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/album/">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.standalone.min.css">
+    <script layout:fragment="script" th:inline="javascript">
+      const auth = [[${#authentication.principal}]]
+      const errors = [[${errors}]]
+
+      console.log(errors)
+
+      const error = [[${error}]]
+      if (error && error === 'failSave'){
+        alert("저장 실패")
+      }
+    </script>
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <style>
+      .long-text {
+        white-space: normal;
+        word-wrap: break-word;
+      }
+
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    
+  </head>
+  <body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.kr.min.js"></script>
+  <header class="p-3 mb-3 border-bottom">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/static" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
+          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+        </a>
+
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="/main" class="nav-link px-2 link-secondary">메인 화면</a></li>
+          <li><a sec:authorize="hasRole('ADMIN')" href="/admin/page" class="nav-link px-2 link-body-emphasis">관리자 페이지</a></li>
+          <li><a sec:authorize="hasRole('USER')" href="/user/page" class="nav-link px-2 link-body-emphasis">마이 페이지</a></li>
+        </ul>
+
+
+
+        <form th:action="@{/logout}" method="POST" sec:authorize="isAuthenticated()">
+          <button type="submit" class="btn btn-outline-dark">로그아웃</button>
+        </form>
+      </div>
+    </div>
+  </header>
+
+<main>
+  <div class="row mb-1">
+    <div class="col-md-6" th:each="notification : ${notificationList}">
+      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+          <strong class="d-inline-block mb-2 text-primary-emphasis" th:text="${notification.getId()}"></strong>
+          <h3 class="mb-0" th:text="${notification.getTitle()}"></h3>
+          <p class="mb-1 text-body-secondary" th:text="${notification.getCreatedAt()}"></p>
+          <p class="card-text mb-auto long-text" th:text="${notification.getContent()}"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="album py-5 bg-light">
+    <div class="container">
+      <form class="row g-3" action="/main/search" method="post">
+        <div class="col-md-6">
+          <input id="search" name="name" type="search" class="form-control" placeholder="Book Search" aria-label="Search">
+          <label for="search" class="form-label"></label>
+        </div>
+        <div class="col-md-4">
+          <select id="inputState" name="searchType" class="form-select">
+            <option value="title" selected>제목</option>
+            <option value="writer">저자</option>
+            <option value="translator">역자</option>
+            <option value="publisher">출판사</option>
+          </select>
+          <label for="inputState" class="form-label"></label>
+        </div>
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-primary">검색</button>
+        </div>
+      </form>
+
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div class="col" th:each="education : ${educationList}">
+          <div class="card shadow-sm">
+            <img class="bd-placeholder-img card-img-top" th:src="@{'/temp/' + ${education.getUploadFileName()}}" width="100%" height="225" alt="Thumbnail" />
+            <div class="card-body">
+              <p class="card-text">
+                책이름   <span th:text="${education.getBookName()}"></span></p>
+              <p class="card-text">
+                출판사   <span th:text="${education.getPublisher()}"></span></p>
+              </p>
+              <p class="card-text">
+                저자 및 역자   <span th:text="${education.getWriter()}"></span>, <span th:text="${education.getTranslator()}"></span></p>
+              </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myLargeModal">
+                    대여
+                  </button>
+
+                  <!-- Modal -->
+                  <div class="modal fade" id="myLargeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="exampleModalLabel" th:text="${education.getBookName()}">title</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <div>
+                            <p>대여일</p>
+                            <input type="text" id="datepickerRental">
+                          </div>
+                          <div>
+                            <p>반납일</p>
+                            <input type="text" id="datepickerReturn">
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                          <form action="/rental/save" method="post">
+                            <input type="hidden" name="educationId" th:value="${education.getId()}" />
+                            <input type="hidden" name="memberId" th:value="${#authentication.name}" />
+                            <input type="hidden" id="rentalDate" name="rentalDate">
+                            <input type="hidden" id="returnDate" name="returnDate">
+                            <button type="submit" class="btn btn-primary">대여</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <script th:inline="javascript">
+                    var dayOfWeekRental = /*[[${dayOfWeekRental}]]*/ {};
+                    var date = new date();
+                  </script>
+                  <script>
+                    $(document).ready(function() {
+
+                      // Datepicker 초기화
+                      $('#datepickerRental').datepicker({
+                        format: 'yyyy-mm-dd', // 날짜 형식 설정
+                        language : "kr",
+                        daysOfWeekDisabled: getDisabledDays(dayOfWeekRental), // 선택 불가능한 요일 설정 (일요일, 토요일 제외)
+                        startDate: new Date(), // 오늘 이전 날짜 선택 불가능하도록 설정
+                        autoclose: true // 선택한 날짜 선택창이 자동으로 닫히도록 설정
+
+                      })
+                    });
+                    // Rental 날짜 선택 시 반납일 선택 가능하도록 처리
+                    $('#datepickerRental').on('change', function() {
+                      var rentalDate = new Date($(this).val());
+                      rentalDate.setDate(rentalDate.getDate() + 14); // 대여일로부터 2주 뒤
+
+                      // Datepicker 초기화 (반납일)
+                      $('#datepickerReturn').datepicker('remove'); // 기존 Datepicker 초기화
+                      $('#datepickerReturn').val(''); // 기존 반납일 데이터 초기화
+                      $('#datepickerReturn').prop('disabled', false); // 반납일 입력 가능하도록 활성화
+
+                      $('#datepickerReturn').datepicker({
+                        format: 'yyyy-mm-dd',
+                        language: 'kr',
+                        daysOfWeekDisabled: getDisabledDays(dayOfWeekReturn),
+                        endDate: rentalDate, // 대여일로부터 2주 뒤부터 선택 가능
+                        autoclose: true
+                      });
+                    });
+                    $('.btn-primary').click(function() {
+                      // 반납일 선택한 날짜
+                      var rentalDate = $('#datepickerRental').val();
+                      // 숨겨진 input 태그에 선택한 날짜들을 설정
+                      $('#rentalDate').val(rentalDate);
+
+                      // 반납일 선택한 날짜
+                      var returnDate = $('#datepickerReturn').val();
+                      // 숨겨진 input 태그에 선택한 날짜들을 설정
+                      $('#returnDate').val(returnDate);
+                    });
+                    function getDisabledDays(dayOfWeekRental) {
+                      var disabledDays = [];
+                      if (!dayOfWeekRental.monDay) disabledDays.push(1);
+                      if (!dayOfWeekRental.tuesDay) disabledDays.push(2);
+                      if (!dayOfWeekRental.wednesDay) disabledDays.push(3);
+                      if (!dayOfWeekRental.thursDay) disabledDays.push(4);
+                      if (!dayOfWeekRental.friDay) disabledDays.push(5);
+                      if (!dayOfWeekRental.saturDay) disabledDays.push(6);
+                      if (!dayOfWeekRental.sunDay) disabledDays.push(0);
+                      return disabledDays.join(",");
+                    }
+                  </script>
+                  <script th:inline="javascript">
+                    var dayOfWeekReturn = /*[[${dayOfWeekReturn}]]*/ {};
+
+                  </script>
+
+                </div>
+<!--        자세히보기 추후 구현        <small class="text-muted"><button onclick="window.open('/main')" type="button" class="btn btn-sm btn-outline-secondary">더 보기</button></small>-->
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+        <div class="d-flex justify-content-center mt-4">
+          <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+              <li class="page-item" th:class="${educationPage.first ? 'disabled' : ''}">
+                <a class="page-link" th:href="@{/main(page=${educationPage.number - 1})}" th:if="${educationPage.hasPrevious()}">Previous</a>
+              </li>
+              <li class="page-item" th:each="page : ${#numbers.sequence(0, educationPage.totalPages - 1)}" th:class="${page == educationPage.number ? 'active' : ''}">
+                <a class="page-link" th:href="@{/main(page=${page})}" th:text="${page + 1}"></a>
+              </li>
+              <li class="page-item" th:class="${educationPage.hasNext() ? '' : 'disabled'}">
+                <a class="page-link" th:href="@{/main(page=${educationPage.number + 1})}" th:if="${educationPage.hasNext()}">Next</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="text-muted py-5">
+  <div class="container">
+    <p class="float-end mb-1">
+      <a href="#">Back to top</a>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
