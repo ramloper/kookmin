@@ -87,7 +87,7 @@ public class DemoApplication {
 			IntStream.rangeClosed(11, 30).forEach(value -> {
 				educationRepository.save(Education.builder()
 						.id(value)
-						.bookName("미술교육책."+value)
+						.bookName("12test"+value)
 						.originFileName("12test.jpg")
 						.uploadFileName("12test.jpg")
 						.publisher("미진사")
@@ -138,12 +138,13 @@ public class DemoApplication {
 	CommandLineRunner initDataAdmin(MemberRepository memberRepository,
 									PasswordEncoder passwordEncoder) {
 
+
 		return (args)->{
 			memberRepository.save(Member.builder()
 					.username("admin")
-					.password(passwordEncoder.encode("1234"))
+					.password(passwordEncoder.encode("ALTNFRYDBR!!213"))
 					.MemberName("관리자")
-					.phoneNumber("010-1234-1234")
+					.phoneNumber("010-8936-1166")
 					.roleSet(Collections.singleton(MemberRole.ADMIN))
 					.status(MemberStatus.ACTIVE)
 					.build());

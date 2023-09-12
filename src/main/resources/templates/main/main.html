@@ -117,7 +117,7 @@
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         <div class="col" th:each="education : ${educationList}">
           <div class="card shadow-sm">
-            <img class="bd-placeholder-img card-img-top" th:src="@{'/image/' + ${education.getUploadFileName()}}" width="100%" height="225" alt="Thumbnail" />
+            <img class="bd-placeholder-img card-img-top" th:src="@{'/temp/' + ${education.getUploadFileName()}}" width="100%" height="225" alt="Thumbnail" />
             <div class="card-body">
               <p class="card-text">
                 책이름   <span th:text="${education.getBookName()}"></span></p>
