@@ -203,7 +203,7 @@
       <div class="modal-body p-5 pt-0">
         <form id="loginForm" action="/user/login" method="post" class="">
           <div class="form-floating mb-3">
-            <input type="text" name="username" class="form-control rounded-3" id="floatingInput" placeholder="학번" required pattern="[A-Z][0-9]{7}" title="학번은 대문자로 시작하고 7자리 숫자여야 합니다."/>
+            <input type="text" name="username" class="form-control rounded-3" id="floatingInput" placeholder="학번" required pattern="(?:[A-Z][0-9]{7}|admin)" title="학번은 대문자로 시작하고 7자리 숫자여야 합니다."/>
             <label for="floatingInput">학번</label>
             <span id="username-error" style="color: red;"></span>
           </div>
