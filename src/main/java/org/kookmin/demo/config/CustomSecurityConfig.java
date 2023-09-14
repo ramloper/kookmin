@@ -47,7 +47,7 @@ public class CustomSecurityConfig {
                 .loginPage("/user/login")
                 .loginProcessingUrl("/user/login")
                 .defaultSuccessUrl("/main")
-                .failureUrl("/user/login?err=e")
+                .failureUrl("/user/login")
                 .and()
                 .rememberMe()
                 .rememberMeParameter("remember-me")
