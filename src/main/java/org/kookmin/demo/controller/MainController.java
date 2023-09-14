@@ -6,7 +6,6 @@ import org.kookmin.demo.domain.DayOfWeek;
 import org.kookmin.demo.domain.Education;
 import org.kookmin.demo.domain.Notification;
 import org.kookmin.demo.dto.request.education.EducationSearchDTO;
-import org.kookmin.demo.dto.request.member.MemberLoginDTO;
 import org.kookmin.demo.service.DayOfWeekService;
 import org.kookmin.demo.service.EducationService;
 import org.kookmin.demo.service.NotificationService;

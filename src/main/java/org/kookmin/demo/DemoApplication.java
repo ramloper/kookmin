@@ -133,41 +133,7 @@ public class DemoApplication {
 		};
 	}
 
-	@Profile("prod")
-	@Bean
-	CommandLineRunner initDataAdmin(MemberRepository memberRepository,
-									PasswordEncoder passwordEncoder,
-									DayOfWeekRepository dayOfWeekRepository) {
 
-
-		return (args)->{
-			memberRepository.save(Member.builder()
-					.username("admin")
-					.password(passwordEncoder.encode("ALTNFRYDBR!!213"))
-					.MemberName("관리자")
-					.phoneNumber("010-8936-1166")
-					.roleSet(Collections.singleton(MemberRole.ADMIN))
-					.status(MemberStatus.ACTIVE)
-					.build());
-
-			dayOfWeekRepository.save(DayOfWeek.builder()
-					.id(1)
-					.monDay(false)
-					.tuesDay(true)
-					.wednesDay(false)
-					.thursDay(true)
-					.friDay(false)
-					.build());
-			dayOfWeekRepository.save(DayOfWeek.builder()
-					.id(2)
-					.monDay(false)
-					.tuesDay(true)
-					.wednesDay(false)
-					.thursDay(true)
-					.friDay(false)
-					.build());
-		};
-	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);

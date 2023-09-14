@@ -11,9 +11,11 @@ import org.kookmin.demo.service.MemberService;
 import org.kookmin.demo.service.RentalService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
@@ -27,7 +29,7 @@ public class MemberController {
     private final RentalService rentalService;
 
     @GetMapping("/login")
-    public void login(@RequestParam(required = false) String err, String logout, Model model) {
+    public void login(@RequestParam(required = false) String err, Model model) {
         if (err != null){
             model.addAttribute("err", "err");
             model.addAttribute("alertMessage", "ID, PassWord Check");
@@ -36,20 +38,22 @@ public class MemberController {
 
 
     @GetMapping("/joinPage")
-    public String joinPage() {
+    public String joinPage(@Valid MemberSaveDTO memberSaveDTO, BindingResult result, Model model) {
+        model.addAttribute("result", result);
+        model.addAttribute("memberSaveDTO", new MemberSaveDTO());
         return "user/join";
     }
 
     @PostMapping("/join")
-    public String join(MemberSaveDTO dto, RedirectAttributes redirect) {
+    public String join(@Valid MemberSaveDTO memberSaveDTO, BindingResult result, Model model) throws UserNameExistException {
 
-        try {
-            memberService.saveMember(dto);
-        } catch (UserNameExistException e) {
-            redirect.addFlashAttribute("error", "username");
-            return "redirect:/user/joinPage";
+        System.out.println("들어옴?");
+        if (result.hasErrors()){
+            System.out.println("if문 들어옴?");
+            return "user/join";
         }
-        redirect.addFlashAttribute("result", "success");
+        memberService.saveMember(memberSaveDTO);
+
         return "redirect:/user/login";
     }
 
