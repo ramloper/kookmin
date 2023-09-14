@@ -136,7 +136,8 @@ public class DemoApplication {
 	@Profile("prod")
 	@Bean
 	CommandLineRunner initDataAdmin(MemberRepository memberRepository,
-									PasswordEncoder passwordEncoder) {
+									PasswordEncoder passwordEncoder,
+									DayOfWeekRepository dayOfWeekRepository) {
 
 
 		return (args)->{
@@ -149,6 +150,22 @@ public class DemoApplication {
 					.status(MemberStatus.ACTIVE)
 					.build());
 
+			dayOfWeekRepository.save(DayOfWeek.builder()
+					.id(1)
+					.monDay(false)
+					.tuesDay(true)
+					.wednesDay(false)
+					.thursDay(true)
+					.friDay(false)
+					.build());
+			dayOfWeekRepository.save(DayOfWeek.builder()
+					.id(2)
+					.monDay(false)
+					.tuesDay(true)
+					.wednesDay(false)
+					.thursDay(true)
+					.friDay(false)
+					.build());
 		};
 	}
 
