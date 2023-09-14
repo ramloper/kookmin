@@ -11,6 +11,7 @@ import java.util.List;
 
 public interface MemberService {
 
+    boolean findByUserName(MemberSaveDTO memberSaveDTO);
     void saveMember(MemberSaveDTO dto) throws UserNameExistException;
 
     List<Member> findAllMember();

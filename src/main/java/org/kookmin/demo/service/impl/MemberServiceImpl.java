@@ -79,4 +79,10 @@ public class MemberServiceImpl implements MemberService {
 
         member.setStatus(MemberStatus.INACTIVE);
     }
+
+    public boolean findByUserName(MemberSaveDTO memberSaveDTO){
+        boolean exist = memberRepository.existsById(memberSaveDTO.getUsername());
+        if (exist) return true;
+        else return false;
+    }
 }

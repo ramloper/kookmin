@@ -19,7 +19,7 @@ public class MemberSaveDTO {
     private String name;
 
     @NotBlank(message = "휴대폰 번호는 필수입니다.")
-    @Pattern(regexp = "^[0-9]{10}$", message = "휴대폰 번호는 10자리의 숫자만 허용됩니다.")
+    @Pattern(regexp = "^[0-9]{11}$", message = "휴대폰 번호는 10자리의 숫자만 허용됩니다.")
     private String phoneNumber;
 
 }

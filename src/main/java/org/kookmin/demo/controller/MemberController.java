@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.kookmin.demo.domain.Member;
 import org.kookmin.demo.domain.Rental;
+import org.kookmin.demo.dto.request.member.MemberLoginDTO;
 import org.kookmin.demo.dto.request.member.MemberModifyDTO;
 import org.kookmin.demo.dto.request.member.MemberSaveDTO;
 import org.kookmin.demo.exception.UserNameExistException;
@@ -47,9 +48,12 @@ public class MemberController {
     @PostMapping("/join")
     public String join(@Valid MemberSaveDTO memberSaveDTO, BindingResult result, Model model) throws UserNameExistException {
 
-        System.out.println("들어옴?");
         if (result.hasErrors()){
-            System.out.println("if문 들어옴?");
+            return "user/join";
+        }
+        String error = "error";
+        if (memberService.findByUserName(memberSaveDTO)){
+            model.addAttribute("error", error);
             return "user/join";
         }
         memberService.saveMember(memberSaveDTO);
