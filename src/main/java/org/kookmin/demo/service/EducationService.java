@@ -31,7 +31,7 @@ public interface EducationService {
     void updateEducation(EducationModifyDTO dto);
 
     void okEducation(Integer id);
-    void deleteEducation(String studentId);
+    void deleteEducation(Integer id);
 
 
 

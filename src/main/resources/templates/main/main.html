@@ -135,6 +135,7 @@
                     대여
                   </button>
 
+
                   <!-- Modal -->
                   <div class="modal fade" id="myLargeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -161,6 +162,10 @@
                             <input type="hidden" id="rentalDate" name="rentalDate">
                             <input type="hidden" id="returnDate" name="returnDate">
                             <button type="submit" class="btn btn-primary">대여</button>
+                            <form action="/admin/education/delete" method="post">
+                              <input type="hidden" name="educationId" th:value="${education.getId()}" />
+                              <button sec:authorize="hasRole('ADMIN')" type="submit" class="btn btn-primary">삭제</button>
+                            </form>
                           </form>
                         </div>
                       </div>

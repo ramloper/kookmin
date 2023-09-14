@@ -74,7 +74,7 @@ public class EducationServiceImpl implements EducationService {
     @Transactional
     public void returnEducation(Integer id){
         Rental rental = rentalRepository.findById(id).orElseThrow();
-        rental.setStatus(RentalStatus.WAITING);
+        rental.setStatus(RentalStatus.DELETED);
         Education education = educationRepository.findById(rental.getEducation().getId()).orElseThrow();
         education.setStatus(EducationStatus.AVAILABLE);
 
@@ -132,7 +132,8 @@ public class EducationServiceImpl implements EducationService {
         Education education = educationRepository.findById(id).orElseThrow();
     }
     @Override
-    public void deleteEducation(String studentId) {
-
+    public void deleteEducation(Integer id) {
+        Education education = educationRepository.findById(id).orElseThrow();
+        educationRepository.delete(education);
     }
 }

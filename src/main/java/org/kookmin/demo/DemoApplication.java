@@ -72,7 +72,7 @@ public class DemoApplication {
 						.status(MemberStatus.ACTIVE)
 						.build());
 			});
-			IntStream.rangeClosed(1, 10).forEach(value -> {
+			IntStream.rangeClosed(1, 2).forEach(value -> {
 				educationRepository.save(Education.builder()
 						.id(value)
 						.bookName("미술교육책."+value)
@@ -84,7 +84,7 @@ public class DemoApplication {
 						.status(EducationStatus.UNAVAILABLE)
 						.build());
 			});
-			IntStream.rangeClosed(11, 30).forEach(value -> {
+			IntStream.rangeClosed(3, 4).forEach(value -> {
 				educationRepository.save(Education.builder()
 						.id(value)
 						.bookName("12test"+value)
@@ -98,7 +98,7 @@ public class DemoApplication {
 			});
 
 
-			IntStream.rangeClosed(1, 5).forEach(value -> {
+			IntStream.rangeClosed(1, 2).forEach(value -> {
 				rentalRepository.save(Rental.builder()
 						.id(value)
 						.member(member)
@@ -109,7 +109,7 @@ public class DemoApplication {
 						.build());
 
 			});
-			IntStream.rangeClosed(6, 10).forEach(value -> {
+			IntStream.rangeClosed(3, 4).forEach(value -> {
 				rentalRepository.save(Rental.builder()
 						.id(value)
 						.member(member)

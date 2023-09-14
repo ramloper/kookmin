@@ -25,7 +25,7 @@ public interface RentalService {
 
     void rentalUpdate();
 
-    void rentalDelete(Integer id);
+    void rentalCancel(Integer id);
 
     void okRental(Integer id) throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException;
     public LocalDate returnDay();

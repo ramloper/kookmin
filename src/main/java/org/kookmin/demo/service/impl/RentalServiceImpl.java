@@ -68,10 +68,14 @@ public class RentalServiceImpl implements RentalService {
 
     @Override
     @Transactional
-    public void rentalDelete(Integer id) {
+    public void rentalCancel(Integer id) {
         Rental rental = rentalRepository.findById(id).orElseThrow();
-        rental.setStatus(RentalStatus.DELETED);
+        rental.getEducation().setStatus(EducationStatus.AVAILABLE);
+
+        rentalRepository.delete(rental);
+
     }
+
 
     @Transactional
     @Override

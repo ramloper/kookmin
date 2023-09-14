@@ -53,6 +53,14 @@ public class AdminController {
         educationService.saveEducation(dto);
         return "redirect:/admin/page";
     }
+    @PostMapping("/education/delete")
+    public String deleteEducation(Integer id) {
+
+
+        // 도서 정보 삭제 로직
+        educationService.deleteEducation(id);
+        return "redirect:/admin/page";
+    }
     @PostMapping("/education/day/update/return")
     public String updateDayReturn(@ModelAttribute EducationDaySaveDTO dto){
         dayOfWeekService.updateDayReturn(dto);
