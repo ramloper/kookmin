@@ -43,9 +43,6 @@ public class EducationServiceImpl implements EducationService {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    @Value("${file.path}")
-    String savePath;
-
     @Override
     public void saveEducation(EducationSaveDTO dto) {
         // 도서 정보 및 업로드된 파일 처리
