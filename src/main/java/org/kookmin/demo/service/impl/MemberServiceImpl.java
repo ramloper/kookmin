@@ -25,9 +25,6 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder encoder;
 
-
-    @Value("${file.path}")
-    private String uploadFolder;
     @Override
     public void saveMember(MemberSaveDTO dto) throws UserNameExistException {
         boolean exist = memberRepository.existsById(dto.getUsername());
