@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.kookmin.demo.domain.Member;
 import org.kookmin.demo.domain.Rental;
-import org.kookmin.demo.dto.request.member.MemberLoginDTO;
 import org.kookmin.demo.dto.request.member.MemberModifyDTO;
 import org.kookmin.demo.dto.request.member.MemberSaveDTO;
 import org.kookmin.demo.exception.UserNameExistException;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -61,14 +59,6 @@ public class MemberController {
         return "redirect:/user/login";
     }
 
-    @GetMapping("/list")
-    public String detailMember(Model model){
-        List<Member> memberList = memberService.findAllMember();
-        model.addAttribute("memberList", memberList);
-        List<Rental> rentalList = rentalService.rentalListReserved();
-        model.addAttribute("rentalList", rentalList);
-        return "user/userlist";
-    }
     @GetMapping("/member/info")
     @ResponseBody
     public String getMemberInfo(@RequestParam("studentId") String studentId) {
@@ -98,8 +88,8 @@ public class MemberController {
     }
 
     @PostMapping("/delete")
-    public String deleteMember(Principal principal){
-        memberService.deleteMember(principal.getName());
+    public String deleteMember(String username){
+        memberService.deleteMember(username);
         return "redirect:/admin/page";
     }
 }

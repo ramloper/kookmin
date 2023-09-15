@@ -86,7 +86,7 @@ public class DemoApplication {
 			IntStream.rangeClosed(3, 4).forEach(value -> {
 				educationRepository.save(Education.builder()
 						.id(value)
-						.bookName("12test"+value)
+						.bookName("미술교육책"+value)
 						.originFileName("12test.jpg")
 						.publisher("미진사")
 						.writer("박지혜")
