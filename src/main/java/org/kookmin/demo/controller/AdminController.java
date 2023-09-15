@@ -3,16 +3,11 @@ package org.kookmin.demo.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.kookmin.demo.domain.DayOfWeek;
-import org.kookmin.demo.domain.Notification;
-import org.kookmin.demo.domain.Rental;
+import org.kookmin.demo.domain.*;
 import org.kookmin.demo.dto.request.education.EducationDaySaveDTO;
 import org.kookmin.demo.dto.request.education.EducationSaveDTO;
 import org.kookmin.demo.dto.request.notification.NotificationRequestDTO;
-import org.kookmin.demo.service.DayOfWeekService;
-import org.kookmin.demo.service.EducationService;
-import org.kookmin.demo.service.NotificationService;
-import org.kookmin.demo.service.RentalService;
+import org.kookmin.demo.service.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
@@ -35,13 +30,13 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/admin")
 @RequiredArgsConstructor
-@PropertySource("classpath:/application-dev.properties")
 @Slf4j
 public class AdminController {
     private final EducationService educationService;
     private final RentalService rentalService;
     private final DayOfWeekService dayOfWeekService;
     private final NotificationService notificationService;
+    private final MemberService memberService;
 
 
 
@@ -54,12 +49,12 @@ public class AdminController {
         return "redirect:/admin/page";
     }
     @PostMapping("/education/delete")
-    public String deleteEducation(Integer id) {
+    public String deleteEducation(Integer educationId) {
 
-
-        // 도서 정보 삭제 로직
-        educationService.deleteEducation(id);
-        return "redirect:/admin/page";
+        System.out.println("컨트롤러 들어옴?");
+        // 도서 정보 삭제 로직 (소프트 delete)
+        educationService.deleteEducation(educationId);
+        return "redirect:/admin/list";
     }
     @PostMapping("/education/day/update/return")
     public String updateDayReturn(@ModelAttribute EducationDaySaveDTO dto){
@@ -96,7 +91,7 @@ public class AdminController {
     @PostMapping("/return")
     public String rentalReturn(Integer educationId){
         educationService.returnEducation(educationId);
-        return "redirect:/user/list";
+        return "redirect:/admin/list";
     }
 
     @GetMapping("/notification")
@@ -127,4 +122,14 @@ public class AdminController {
         return "redirect:/admin/notification";
     }
 
+    @GetMapping("/list")
+    public String detailMember(Model model){
+        List<Member> memberList = memberService.findAllMember();
+        model.addAttribute("memberList", memberList);
+        List<Rental> rentalList = rentalService.rentalListReserved();
+        model.addAttribute("rentalList", rentalList);
+        List<Education> educationList = educationService.findAllEducation();
+        model.addAttribute("educationList", educationList);
+        return "admin/list";
+    }
 }

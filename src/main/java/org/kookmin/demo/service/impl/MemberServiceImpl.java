@@ -74,10 +74,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public void deleteMember(String studentId) {
-        Member member = memberRepository.findById(studentId).orElseThrow();
-
-        member.setStatus(MemberStatus.INACTIVE);
+    public void deleteMember(String username) {
+        Member member = memberRepository.findById(username).orElseThrow();
+        memberRepository.delete(member);
     }
 
     public boolean findByUserName(MemberSaveDTO memberSaveDTO){
