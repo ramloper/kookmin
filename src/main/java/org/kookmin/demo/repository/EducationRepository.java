@@ -14,8 +14,8 @@ import java.util.List;
 @Repository
 public interface EducationRepository extends JpaRepository<Education, Integer> {
 
-    @Query("select e from Education e join fetch e.rental")
-    List<Education> findAllByRental();
+    @Query("select e from Education e join fetch e.rental where e.status!=:educationStatus")
+    List<Education> findAllByRental(EducationStatus educationStatus);
 
     @Query(value = "select e from Education e where e.status = :educationStatus",
             countQuery = "select count(e) from Education e")

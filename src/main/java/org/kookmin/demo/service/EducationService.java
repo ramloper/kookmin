@@ -24,13 +24,9 @@ public interface EducationService {
 
     Page<Education> findAllSearchType(EducationSearchDTO dto, Pageable pageable);
 
-    List<Education> findAllEducationJoinMember();
-
-    EducationResponseDTO findEducationById(String studentId);
 
     void updateEducation(EducationModifyDTO dto);
 
-    void okEducation(Integer id);
     void deleteEducation(Integer id);
 
 

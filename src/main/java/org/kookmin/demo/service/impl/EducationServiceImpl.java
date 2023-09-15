@@ -93,7 +93,7 @@ public class EducationServiceImpl implements EducationService {
 
     @Override
     public List<Education> findAllEducation() {
-        List<Education> list = educationRepository.findAllByRental();
+        List<Education> list = educationRepository.findAllByRental(EducationStatus.DELETED);
         return list;
     }
 
@@ -119,30 +119,19 @@ public class EducationServiceImpl implements EducationService {
         return list;
     }
 
-    public List<Education> findAllEducationJoinMember(){
-        List<Education> list = educationRepository.findAllByRental();
-        return list;
-    }
-
-    @Override
-    public EducationResponseDTO findEducationById(String studentId) {
-        return null;
-    }
 
     @Override
     public void updateEducation(EducationModifyDTO dto) {
 
     }
 
-
+    @Override
     @Transactional
-    @Override
-    public void okEducation(Integer id){
-        Education education = educationRepository.findById(id).orElseThrow();
-    }
-    @Override
     public void deleteEducation(Integer id) {
+        System.out.println("서비스단 들어옴?");
         Education education = educationRepository.findById(id).orElseThrow();
-        educationRepository.delete(education);
+        System.out.println("education before : " + education.getStatus());
+        education.setStatus(EducationStatus.DELETED);
+        System.out.println("education after : " + education.getStatus());
     }
 }
