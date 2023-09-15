@@ -1,5 +1,9 @@
 package org.kookmin.demo.service.impl;
 
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kookmin.demo.common.EducationStatus;
@@ -14,6 +18,7 @@ import org.kookmin.demo.repository.EducationRepository;
 import org.kookmin.demo.repository.RentalRepository;
 import org.kookmin.demo.service.EducationService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,6 +38,10 @@ public class EducationServiceImpl implements EducationService {
 
     private final EducationRepository educationRepository;
     private final RentalRepository rentalRepository;
+    private final AmazonS3Client amazonS3Client;
+
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
 
     @Value("${file.path}")
     String savePath;
@@ -40,24 +50,26 @@ public class EducationServiceImpl implements EducationService {
     public void saveEducation(EducationSaveDTO dto) {
         // 도서 정보 및 업로드된 파일 처리
         MultipartFile file = dto.getFile();
+
+        ObjectMetadata metadata = new ObjectMetadata();
         if (file != null && !file.isEmpty()) {
 
             try {
-                // 파일 저장 경로
-                // 파일 이름
-                UUID uuid = UUID.randomUUID();
-                String[] uuids = uuid.toString().split("-");
-                String uniqueName = uuids[0];
-                // 파일 저장
-                String fileName = dto.getFile().getOriginalFilename();
-                String fileExt = fileName.substring(fileName.lastIndexOf("."));
-                File img_File = new File(savePath +uniqueName+fileExt);
+                metadata.setContentType(file.getContentType());
+                metadata.setContentLength(file.getSize());
+                String originalFileName = file.getOriginalFilename();
+                int index = originalFileName.lastIndexOf(".");
+                String ext = originalFileName.substring(index + 1);
 
-                file.transferTo(img_File);
-                // 파일 이름을 DTO에 설정
-                dto.setUploadFileName(uniqueName+fileExt);
-                dto.setOriginFileName(file.getOriginalFilename());
-
+                String storeFileName = UUID.randomUUID() + "." + ext;
+                String key = "BookImages/" + storeFileName;
+                try (InputStream inputStream = file.getInputStream()){
+                    amazonS3Client.putObject(new PutObjectRequest(bucket, key, inputStream, metadata)
+                            .withCannedAcl(CannedAccessControlList.PublicRead));
+                }
+                String storeFileUrl = amazonS3Client.getUrl(bucket, key).toString();
+                dto.setStoreFileUrl(storeFileUrl);
+                dto.setOriginFileName(originalFileName);
 
             } catch (IOException e) {
                 // 파일 저장 실패 시 예외 처리

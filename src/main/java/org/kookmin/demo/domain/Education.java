@@ -27,7 +27,7 @@ public class Education extends BaseEntity{
 
     private String translator;
 
-    private String uploadFileName;
+    private String storeFileUrl;
 
     private String originFileName;
 

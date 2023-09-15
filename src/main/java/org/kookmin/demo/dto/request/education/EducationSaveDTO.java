@@ -22,7 +22,7 @@ public class EducationSaveDTO {
 
     private MultipartFile file;
 
-    private String uploadFileName;
+    private String storeFileUrl;
 
     private String originFileName;
 
@@ -32,7 +32,7 @@ public class EducationSaveDTO {
                 .translator(translator)
                 .bookName(bookName)
                 .publisher(publisher)
-                .uploadFileName(uploadFileName)
+                .storeFileUrl(storeFileUrl)
                 .originFileName(originFileName)
                 .status(EducationStatus.AVAILABLE)
                 .build();
