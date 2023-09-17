@@ -140,6 +140,8 @@ public class DemoApplication {
 			memberRepository.save(Member.builder()
 					.username("admin")
 					.password(passwordEncoder.encode("ALTNFRYDBR!!213"))
+					.MemberName("관리자")
+					.roleSet(Collections.singleton(MemberRole.ADMIN))
 					.phoneNumber("01089361166")
 					.status(MemberStatus.ACTIVE)
 					.build());
