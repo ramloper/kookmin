@@ -18,6 +18,8 @@ public interface EducationService {
 
     void returnEducation(Integer id);
 
+    List<Education> findAllEducationByRental();
+
     List<Education> findAllEducation();
 
     Page<Education> findAllPage(Pageable pageable);

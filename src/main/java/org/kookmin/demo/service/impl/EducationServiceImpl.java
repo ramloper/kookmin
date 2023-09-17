@@ -86,13 +86,14 @@ public class EducationServiceImpl implements EducationService {
         rental.setStatus(RentalStatus.DELETED);
         Education education = educationRepository.findById(rental.getEducation().getId()).orElseThrow();
         education.setStatus(EducationStatus.AVAILABLE);
-
-
-
     }
-
     @Override
     public List<Education> findAllEducation() {
+        List<Education> list = educationRepository.findAllEducation(EducationStatus.DELETED);
+        return list;
+    }
+    @Override
+    public List<Education> findAllEducationByRental() {
         List<Education> list = educationRepository.findAllByRental(EducationStatus.DELETED);
         return list;
     }
