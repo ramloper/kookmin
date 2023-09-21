@@ -13,7 +13,7 @@
 
 ## ✍🏻 ERD 
 
-![스크린샷 2023-05-23 142738](https://github.com/ramloper/kookmin/assets/114231216/390b69b7-a7de-4643-90e8-b76ba1ac2dfd)
+![KMU ERD](https://github.com/ramloper/kookmin/assets/114231216/cde14e22-eed2-49c1-adcd-78acd165026d)
 
 ## 🌟 동작 방식 
 
