@@ -60,15 +60,14 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public void modifyMember(String username, MemberModifyDTO dto) {
-        Member member = memberRepository.findById(username).orElseThrow();
-        if (dto.getMemberName() != null) {
-            member.setMemberName(dto.getMemberName());
+        if (dto.getMemberName() != null && !dto.getMemberName().equals("")) {
+            memberRepository.modifyingMemberName(username, dto.getMemberName());
         }
-        if (dto.getPassword() != null) {
-            member.setPassword(encoder.encode(dto.getPassword()));
+        if (dto.getPassword() != null && !dto.getPassword().equals("")) {
+            memberRepository.modifyingPassword(username, encoder.encode(dto.getPassword()));
         }
-        if (dto.getPhoneNumber() != null) {
-            member.setPhoneNumber(dto.getPhoneNumber());
+        if (dto.getPhoneNumber() != null && !dto.getPhoneNumber().equals("")) {
+            memberRepository.modifyingPhoneNumber(username, dto.getPhoneNumber());
         }
     }
 
