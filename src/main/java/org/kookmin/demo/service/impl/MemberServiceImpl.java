@@ -78,6 +78,11 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.delete(member);
     }
 
+    @Transactional
+    public void modifyPassword(MemberModifyDTO dto){
+        memberRepository.modifyingPassword(dto.getUsername(), encoder.encode(dto.getPassword()));
+    }
+
     public boolean findByUserName(MemberSaveDTO memberSaveDTO){
         boolean exist = memberRepository.existsById(memberSaveDTO.getUsername());
         if (exist) return true;
