@@ -96,7 +96,7 @@ public class MemberController {
     @GetMapping("/password")
     public String password(Model model){
         model.addAttribute("memberModifyDTO", new MemberModifyDTO());
-        return "/user/password";
+        return "user/password";
     }
 
     @PostMapping("/changePassword")
