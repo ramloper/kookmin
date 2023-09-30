@@ -20,7 +20,7 @@ import java.security.Principal;
 import java.util.List;
 
 @Controller
-@RequestMapping("/rental")
+@RequestMapping("rental")
 @RequiredArgsConstructor
 public class RentalController {
     private final RentalService rentalService;

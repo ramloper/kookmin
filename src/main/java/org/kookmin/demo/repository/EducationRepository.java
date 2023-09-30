@@ -24,16 +24,16 @@ public interface EducationRepository extends JpaRepository<Education, Integer> {
             countQuery = "select count(e) from Education e")
     Page<Education> findAllByEducationPage(Pageable pageable, EducationStatus educationStatus);
 
-    @Query(value = "select e from Education e where e.bookName = :searchType",
+    @Query(value = "select e from Education e where e.bookName like %:searchType%",
             countQuery = "select count(e) from Education e")
     Page<Education> findAllByBookName(Pageable pageable,@Param("searchType") String searchType);
-    @Query(value = "select e from Education e where e.publisher = :searchType",
+    @Query(value = "select e from Education e where e.publisher like %:searchType%",
             countQuery = "select count(e) from Education e")
     Page<Education> findAllByPublisher(Pageable pageable,@Param("searchType") String searchType);
-    @Query(value = "select e from Education e where e.writer = :searchType",
+    @Query(value = "select e from Education e where e.writer like %:searchType%",
             countQuery = "select count(e) from Education e")
     Page<Education> findAllByWriter(Pageable pageable,@Param("searchType") String searchType);
-    @Query(value = "select e from Education e where e.translator = :searchType",
+    @Query(value = "select e from Education e where e.translator like %:searchType%",
             countQuery = "select count(e) from Education e")
     Page<Education> findAllByTranslator(Pageable pageable,@Param("searchType") String searchType);
 }

@@ -20,7 +20,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Controller
-@RequestMapping("/main")
 @Log4j2
 @RequiredArgsConstructor
 public class MainController {
@@ -30,7 +29,7 @@ public class MainController {
     private final DayOfWeekService dayOfWeekService;
     private final NotificationService notificationService;
 
-    @GetMapping("")
+    @GetMapping("main")
     public String main(Model model, @RequestParam(defaultValue = "0") int page){
         int pageSize = 12; // 페이지당 항목 수
         PageRequest pageable = PageRequest.of(page, pageSize);
@@ -52,7 +51,12 @@ public class MainController {
         return "main/main";
     }
 
-    @PostMapping("/search")
+    @GetMapping("")
+    public String toMain(){
+        return "redirect:/main";
+    }
+
+    @PostMapping("main/search")
     public String educationSearch(EducationSearchDTO dto,
                                   @RequestParam(defaultValue = "0") int page,
                                   Model model){

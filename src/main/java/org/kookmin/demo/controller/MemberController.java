@@ -20,7 +20,7 @@ import java.util.List;
 
 @Controller
 @Log4j2
-@RequestMapping("/user")
+@RequestMapping("user")
 @RequiredArgsConstructor
 public class MemberController {
 
@@ -91,5 +91,18 @@ public class MemberController {
     public String deleteMember(String username){
         memberService.deleteMember(username);
         return "redirect:/admin/page";
+    }
+
+    @GetMapping("/password")
+    public String password(Model model){
+        model.addAttribute("memberModifyDTO", new MemberModifyDTO());
+        return "/user/password";
+    }
+
+    @PostMapping("/changePassword")
+    public String changePassword(MemberModifyDTO memberModifyDTO){
+
+        memberService.modifyPassword(memberModifyDTO);
+        return "redirect:/user/login";
     }
 }

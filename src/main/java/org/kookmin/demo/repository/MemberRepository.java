@@ -3,6 +3,7 @@ package org.kookmin.demo.repository;
 import org.kookmin.demo.domain.Member;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -18,4 +19,14 @@ public interface MemberRepository extends JpaRepository<Member, String> {
 
     @Query("select m from Member m join fetch m.Rental r join fetch r.education")
     List<Member> findAllByRental();
+
+    @Query("update Member m set m.MemberName = :memberName where m.username = :username")
+    @Modifying
+    void modifyingMemberName(@Param("username") String username,@Param("memberName") String memberName);
+    @Query("update Member m set m.password = :password where m.username = :username")
+    @Modifying
+    void modifyingPassword(@Param("username")String username,@Param("password") String password);
+    @Query("update Member m set m.phoneNumber = :phoneNumber where m.username = :username")
+    @Modifying
+    void modifyingPhoneNumber(@Param("username")String username,@Param("phoneNumber") String phoneNumber);
 }

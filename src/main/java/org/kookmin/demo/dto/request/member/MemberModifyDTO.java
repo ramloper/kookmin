@@ -7,9 +7,13 @@ import lombok.Getter;
 @Data
 public class MemberModifyDTO {
 
+    private String username;
+
     private String memberName;
 
     private String password;
+
+    private String passwordCheck;
 
     private String phoneNumber;
 }

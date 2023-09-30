@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("admin")
 @RequiredArgsConstructor
 @Slf4j
 public class AdminController {

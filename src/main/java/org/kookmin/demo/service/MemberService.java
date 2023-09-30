@@ -21,4 +21,6 @@ public interface MemberService {
     void modifyMember(String username, MemberModifyDTO dto);
 
     void deleteMember(String username);
+
+    void modifyPassword(MemberModifyDTO dto);
 }
