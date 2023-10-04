@@ -210,22 +210,5 @@
 
 <script src="checkout.js"></script>
 
-<script>
-
-    function approveEducation(button) {
-        var educationId = button.getAttribute("data-id");
-
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "/admin/ok", true);
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                // 요청이 성공적으로 완료되었을 때 실행할 코드
-                console.log("Education approved successfully.");
-            }
-        };
-        xhr.send("id=" + encodeURIComponent(educationId));
-    }
-</script>
 </body>
 </html>
