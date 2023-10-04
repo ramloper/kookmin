@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.kookmin.demo.domain.*;
 import org.kookmin.demo.dto.request.education.EducationDaySaveDTO;
 import org.kookmin.demo.dto.request.education.EducationSaveDTO;
+import org.kookmin.demo.dto.request.member.MemberModifyDTO;
 import org.kookmin.demo.dto.request.notification.NotificationRequestDTO;
 import org.kookmin.demo.service.*;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +25,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,7 +40,11 @@ public class AdminController {
     private final NotificationService notificationService;
     private final MemberService memberService;
 
-
+    @PostMapping("/modify")
+    public String modifyMember(Principal principal, MemberModifyDTO dto){
+        memberService.modifyMember(principal.getName(), dto);
+        return "redirect:/admin/page";
+    }
 
     @PostMapping("/education/save")
     public String saveEducation(EducationSaveDTO dto) {
