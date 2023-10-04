@@ -17,6 +17,9 @@ public interface EducationRepository extends JpaRepository<Education, Integer> {
     @Query("select e from Education e join fetch e.rental where e.status!=:educationStatus")
     List<Education> findAllByRental(EducationStatus educationStatus);
 
+    @Query("select e from Education e where e.status!=:status")
+    List<Education> findAllEducation(EducationStatus status);
+
     @Query(value = "select e from Education e where e.status = :educationStatus",
             countQuery = "select count(e) from Education e")
     Page<Education> findAllByEducationPage(Pageable pageable, EducationStatus educationStatus);

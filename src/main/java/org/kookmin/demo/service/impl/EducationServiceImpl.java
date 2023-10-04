@@ -43,9 +43,6 @@ public class EducationServiceImpl implements EducationService {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    @Value("${file.path}")
-    String savePath;
-
     @Override
     public void saveEducation(EducationSaveDTO dto) {
         // 도서 정보 및 업로드된 파일 처리
@@ -89,13 +86,14 @@ public class EducationServiceImpl implements EducationService {
         rental.setStatus(RentalStatus.DELETED);
         Education education = educationRepository.findById(rental.getEducation().getId()).orElseThrow();
         education.setStatus(EducationStatus.AVAILABLE);
-
-
-
     }
-
     @Override
     public List<Education> findAllEducation() {
+        List<Education> list = educationRepository.findAllEducation(EducationStatus.DELETED);
+        return list;
+    }
+    @Override
+    public List<Education> findAllEducationByRental() {
         List<Education> list = educationRepository.findAllByRental(EducationStatus.DELETED);
         return list;
     }
