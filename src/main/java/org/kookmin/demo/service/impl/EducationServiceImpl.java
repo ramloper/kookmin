@@ -68,6 +68,7 @@ public class EducationServiceImpl implements EducationService {
                 dto.setStoreFileUrl(storeFileUrl);
                 dto.setOriginFileName(originalFileName);
 
+
             } catch (IOException e) {
                 // 파일 저장 실패 시 예외 처리
                 e.printStackTrace();
