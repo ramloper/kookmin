@@ -1,6 +1,7 @@
 package org.kookmin.demo.domain;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.kookmin.demo.common.MemberRole;
 import org.kookmin.demo.common.MemberStatus;
 
@@ -16,7 +17,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @ToString(exclude = "roleSet")
 public class Member extends BaseEntity{
 

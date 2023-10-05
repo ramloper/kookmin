@@ -1,5 +1,5 @@
 package org.kookmin.demo.common;
 
 public enum RentalStatus {
-    WAITING, RESERVED, DELETED
+    승인대기, 대여중, 삭제
 }

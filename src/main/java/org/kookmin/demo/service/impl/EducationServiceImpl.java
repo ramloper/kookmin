@@ -13,19 +13,16 @@ import org.kookmin.demo.domain.Rental;
 import org.kookmin.demo.dto.request.education.EducationModifyDTO;
 import org.kookmin.demo.dto.request.education.EducationSaveDTO;
 import org.kookmin.demo.dto.request.education.EducationSearchDTO;
-import org.kookmin.demo.dto.response.EducationResponseDTO;
 import org.kookmin.demo.repository.EducationRepository;
 import org.kookmin.demo.repository.RentalRepository;
 import org.kookmin.demo.service.EducationService;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -84,7 +81,7 @@ public class EducationServiceImpl implements EducationService {
     @Transactional
     public void returnEducation(Integer id){
         Rental rental = rentalRepository.findById(id).orElseThrow();
-        rental.setStatus(RentalStatus.DELETED);
+        rental.setStatus(RentalStatus.삭제);
         Education education = educationRepository.findById(rental.getEducation().getId()).orElseThrow();
         education.setStatus(EducationStatus.AVAILABLE);
     }

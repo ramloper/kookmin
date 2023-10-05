@@ -47,12 +47,12 @@ public class RentalServiceImpl implements RentalService {
 
     @Override
     public List<Rental> rentalListWaiting() {
-        List<Rental> rentalList = rentalRepository.findAllByStatus(RentalStatus.WAITING);
+        List<Rental> rentalList = rentalRepository.findAllByStatus(RentalStatus.승인대기);
         return rentalList;
     }
 
     public List<Rental> rentalListReserved() {
-        List<Rental> rentalList = rentalRepository.findAllByStatus(RentalStatus.RESERVED);
+        List<Rental> rentalList = rentalRepository.findAllByStatus(RentalStatus.대여중);
         return rentalList;
     }
     @Override
@@ -87,7 +87,7 @@ public class RentalServiceImpl implements RentalService {
                 .content(content)
                 .build();
         smsService.sendSms(messageDTO);
-        rental.setStatus(RentalStatus.RESERVED);
+        rental.setStatus(RentalStatus.대여중);
     }
 
     public LocalDate returnDay(){

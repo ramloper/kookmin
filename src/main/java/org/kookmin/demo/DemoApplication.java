@@ -103,7 +103,7 @@ public class DemoApplication {
 						.education(educationRepository.findById(value).orElseThrow())
 						.rentalDate("2023-08-10")
 						.returnDate("2023-08-21")
-						.status(RentalStatus.WAITING)
+						.status(RentalStatus.승인대기)
 						.build());
 
 			});
@@ -114,7 +114,7 @@ public class DemoApplication {
 						.education(educationRepository.findById(value).orElseThrow())
 						.rentalDate("2023-08-10")
 						.returnDate("2023-08-21")
-						.status(RentalStatus.RESERVED)
+						.status(RentalStatus.대여중)
 						.build());
 
 			});

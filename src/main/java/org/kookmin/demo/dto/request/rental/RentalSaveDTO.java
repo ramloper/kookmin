@@ -22,7 +22,7 @@ public class RentalSaveDTO {
                 .member(member)
                 .returnDate(returnDate)
                 .rentalDate(rentalDate)
-                .status(RentalStatus.WAITING)
+                .status(RentalStatus.승인대기)
                 .build();
     }
 }

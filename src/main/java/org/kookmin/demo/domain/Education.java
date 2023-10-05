@@ -1,6 +1,7 @@
 package org.kookmin.demo.domain;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.kookmin.demo.common.EducationStatus;
 
 import javax.persistence.*;
@@ -12,7 +13,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 public class Education extends BaseEntity{
 
     @Id

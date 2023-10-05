@@ -1,6 +1,7 @@
 package org.kookmin.demo.domain;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.kookmin.demo.dto.request.notification.NotificationToMainModifyRequestDTO;
 
 import javax.persistence.Column;
@@ -13,7 +14,7 @@ import javax.persistence.Id;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 public class Notification extends BaseEntity{
     @Id
     @GeneratedValue

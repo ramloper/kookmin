@@ -1,12 +1,13 @@
 package org.kookmin.demo.domain;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.kookmin.demo.common.RentalStatus;
 
 import javax.persistence.*;
 
 @Entity
-@Builder
+@SuperBuilder
 @Getter
 @Setter
 @NoArgsConstructor
