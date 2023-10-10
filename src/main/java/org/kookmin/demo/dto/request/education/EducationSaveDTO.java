@@ -34,7 +34,7 @@ public class EducationSaveDTO {
                 .publisher(publisher)
                 .storeFileUrl(storeFileUrl)
                 .originFileName(originFileName)
-                .status(EducationStatus.AVAILABLE)
+                .status(EducationStatus.대여가능)
                 .build();
     }
 }

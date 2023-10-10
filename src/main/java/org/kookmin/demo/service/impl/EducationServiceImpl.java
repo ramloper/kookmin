@@ -83,7 +83,7 @@ public class EducationServiceImpl implements EducationService {
         Rental rental = rentalRepository.findById(id).orElseThrow();
         rental.setStatus(RentalStatus.삭제);
         Education education = educationRepository.findById(rental.getEducation().getId()).orElseThrow();
-        education.setStatus(EducationStatus.AVAILABLE);
+        education.setStatus(EducationStatus.대여가능);
     }
     @Override
     public List<Education> findAllEducation() {
@@ -98,7 +98,7 @@ public class EducationServiceImpl implements EducationService {
 
     @Override
     public Page<Education> findAllPage(Pageable pageable){
-        Page<Education> list = educationRepository.findAllByEducationPage(pageable, EducationStatus.AVAILABLE);
+        Page<Education> list = educationRepository.findAllByEducationPage(pageable, EducationStatus.대여가능);
 
         return list;
     }

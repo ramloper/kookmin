@@ -6,6 +6,7 @@ import org.kookmin.demo.domain.Education;
 import org.kookmin.demo.domain.Rental;
 import org.kookmin.demo.dto.request.member.MemberSaveDTO;
 import org.kookmin.demo.dto.request.rental.RentalSaveDTO;
+import org.kookmin.demo.dto.request.rental.RentalUpdateDTO;
 import org.kookmin.demo.exception.UserNameExistException;
 import org.kookmin.demo.service.RentalService;
 import org.springframework.stereotype.Controller;
@@ -41,6 +42,13 @@ public class RentalController {
     @PostMapping("/cancel")
     public String cancelRental(Integer id){
         rentalService.rentalCancel(id);
+
+        return "redirect:/user/page";
+    }
+
+    @PostMapping("/update")
+    public String updateRental(RentalUpdateDTO dto){
+        rentalService.rentalUpdate(dto);
 
         return "redirect:/user/page";
     }

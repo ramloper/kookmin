@@ -80,7 +80,7 @@ public class DemoApplication {
 						.publisher("미진사")
 						.writer("박지혜")
 						.translator("김우람")
-						.status(EducationStatus.UNAVAILABLE)
+						.status(EducationStatus.대여중)
 						.build());
 			});
 			IntStream.rangeClosed(3, 4).forEach(value -> {
@@ -91,7 +91,7 @@ public class DemoApplication {
 						.publisher("미진사")
 						.writer("박지혜")
 						.translator("김우람")
-						.status(EducationStatus.AVAILABLE)
+						.status(EducationStatus.대여가능)
 						.build());
 			});
 
