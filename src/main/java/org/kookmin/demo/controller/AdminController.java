@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kookmin.demo.domain.*;
 import org.kookmin.demo.dto.request.education.EducationDaySaveDTO;
+import org.kookmin.demo.dto.request.education.EducationModifyDTO;
 import org.kookmin.demo.dto.request.education.EducationSaveDTO;
 import org.kookmin.demo.dto.request.member.MemberModifyDTO;
 import org.kookmin.demo.dto.request.notification.NotificationRequestDTO;
@@ -61,6 +62,15 @@ public class AdminController {
         System.out.println("컨트롤러 들어옴?");
         // 도서 정보 삭제 로직 (소프트 delete)
         educationService.deleteEducation(educationId);
+        return "redirect:/admin/list";
+    }
+
+    @PostMapping("/education/modify")
+    public String modifyEducation(EducationModifyDTO dto) {
+
+
+        // 도서 정보 저장 로직
+        educationService.updateEducation(dto);
         return "redirect:/admin/list";
     }
     @PostMapping("/education/day/update/return")
