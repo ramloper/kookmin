@@ -82,7 +82,6 @@ public class RentalServiceImpl implements RentalService {
     @Transactional
     @Override
     public void rentalUpdate(RentalUpdateDTO dto) {
-        System.out.println("================================"+dto.getId());
         rentalRepository.updateRentalByRentalDateAndReturnDate(dto.getId(), dto.getRentalDate(), dto.getReturnDate());
 
     }

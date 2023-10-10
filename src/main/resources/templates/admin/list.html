@@ -90,7 +90,7 @@
             </a>
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="/main" class="nav-link px-2 link-secondary">Home</a></li>
+                <li><a href="/main" class="nav-link px-2 link-secondary">메인화면</a></li>
                 <li><a sec:authorize="hasRole('ADMIN')" href="/admin/page" class="nav-link px-2 link-secondary">관리자 페이지</a></li>
                 <li><a sec:authorize="hasRole('ADMIN')" href="/admin/list" class="nav-link px-2 link-body-emphasis">유저/도서대여 목록</a></li>
                 <li><a sec:authorize="hasRole('USER')" href="/user/page" class="nav-link px-2 link-secondary">마이 페이지</a></li>
