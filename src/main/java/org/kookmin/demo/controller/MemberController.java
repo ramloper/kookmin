@@ -2,11 +2,13 @@ package org.kookmin.demo.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.kookmin.demo.domain.DayOfWeek;
 import org.kookmin.demo.domain.Member;
 import org.kookmin.demo.domain.Rental;
 import org.kookmin.demo.dto.request.member.MemberModifyDTO;
 import org.kookmin.demo.dto.request.member.MemberSaveDTO;
 import org.kookmin.demo.exception.UserNameExistException;
+import org.kookmin.demo.service.DayOfWeekService;
 import org.kookmin.demo.service.MemberService;
 import org.kookmin.demo.service.RentalService;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,7 @@ public class MemberController {
 
     private final MemberService memberService;
     private final RentalService rentalService;
+    private final DayOfWeekService dayOfWeekService;
 
     @GetMapping("/login")
     public void login(@RequestParam(required = false) String err, Model model) {
@@ -77,6 +80,10 @@ public class MemberController {
     public String userPage(Principal principal, Model model){
         List<Rental> list = rentalService.myRentalList(principal.getName());
         model.addAttribute("list", list);
+        DayOfWeek dayOfWeekRental = dayOfWeekService.findByDayOfWeekRental();
+        model.addAttribute("dayOfWeekRental", dayOfWeekRental);
+        DayOfWeek dayOfWeekReturn = dayOfWeekService.findByDayOfWeekReturn();
+        model.addAttribute("dayOfWeekReturn", dayOfWeekReturn);
 
         return "user/user";
     }

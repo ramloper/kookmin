@@ -83,22 +83,17 @@ public class EducationServiceImpl implements EducationService {
         Rental rental = rentalRepository.findById(id).orElseThrow();
         rental.setStatus(RentalStatus.삭제);
         Education education = educationRepository.findById(rental.getEducation().getId()).orElseThrow();
-        education.setStatus(EducationStatus.AVAILABLE);
+        education.setStatus(EducationStatus.대여가능);
     }
     @Override
     public List<Education> findAllEducation() {
         List<Education> list = educationRepository.findAllEducation(EducationStatus.DELETED);
         return list;
     }
-    @Override
-    public List<Education> findAllEducationByRental() {
-        List<Education> list = educationRepository.findAllByRental(EducationStatus.DELETED);
-        return list;
-    }
 
     @Override
     public Page<Education> findAllPage(Pageable pageable){
-        Page<Education> list = educationRepository.findAllByEducationPage(pageable, EducationStatus.AVAILABLE);
+        Page<Education> list = educationRepository.findAllByEducationPage(pageable, EducationStatus.대여가능);
 
         return list;
     }
@@ -120,17 +115,15 @@ public class EducationServiceImpl implements EducationService {
 
 
     @Override
+    @Transactional
     public void updateEducation(EducationModifyDTO dto) {
-
+        educationRepository.updateEducationByBookName(dto.getId(), dto.getBookName(),dto.getPublisher(), dto.getWriter(),dto.getTranslator());
     }
 
     @Override
     @Transactional
     public void deleteEducation(Integer id) {
-        System.out.println("서비스단 들어옴?");
         Education education = educationRepository.findById(id).orElseThrow();
-        System.out.println("education before : " + education.getStatus());
         education.setStatus(EducationStatus.DELETED);
-        System.out.println("education after : " + education.getStatus());
     }
 }

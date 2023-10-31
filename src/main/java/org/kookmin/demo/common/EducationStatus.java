@@ -1,5 +1,5 @@
 package org.kookmin.demo.common;
 
 public enum EducationStatus {
-    AVAILABLE, UNAVAILABLE ,DELETED
+    대여가능, 대여중,DELETED
 }

@@ -90,7 +90,7 @@
             </a>
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="/main" class="nav-link px-2 link-secondary">Home</a></li>
+                <li><a href="/main" class="nav-link px-2 link-secondary">메인화면</a></li>
                 <li><a sec:authorize="hasRole('ADMIN')" href="/admin/page" class="nav-link px-2 link-secondary">관리자 페이지</a></li>
                 <li><a sec:authorize="hasRole('ADMIN')" href="/admin/list" class="nav-link px-2 link-body-emphasis">유저/도서대여 목록</a></li>
                 <li><a sec:authorize="hasRole('USER')" href="/user/page" class="nav-link px-2 link-secondary">마이 페이지</a></li>
@@ -197,6 +197,46 @@
                                     <button type="submit" class="btn btn-sm btn-outline-secondary">삭제</button>
                                 </form>
                             </span>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#myLargeModal">
+                                수정
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="myLargeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">책 수정</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <form class="needs-validation" action="/admin/education/modify" method="post" novalidate>
+                                            <input type="hidden" name="id" th:value="${education.getId()}">
+                                            <div class="row g-3">
+                                                <div class="col-sm-6">
+                                                    <label for="bookName" class="form-label">책 이름</label>
+                                                    <input type="text" name="bookName" class="form-control" id="bookName" placeholder="비밀번호" value="" required>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <label for="publisher" class="form-label">출판사</label>
+                                                    <input type="text" name="publisher" class="form-control" id="publisher" placeholder="비밀번호" value="" required>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <label for="writer" class="form-label">저자</label>
+                                                    <input type="text" name="writer" class="form-control" id="writer" placeholder="비밀번호" value="" required>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <label for="translator" class="form-label">역자</label>
+                                                    <input type="text" name="translator" class="form-control" id="translator" placeholder="비밀번호" value="" required>
+                                                </div>
+                                            </div>
+
+                                            <button class="w-100 btn btn-primary btn-lg" type="submit">수 정</button>
+                                        </form>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </li>
                     </ul>
                 </div>

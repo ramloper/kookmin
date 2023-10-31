@@ -13,6 +13,8 @@
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/checkout/">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.standalone.min.css">
 
 
 
@@ -54,6 +56,9 @@
 
 </head>
 <body class="bg-body-tertiary">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.kr.min.js"></script>
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <symbol id="check2" viewBox="0 0 16 16">
         <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
@@ -118,6 +123,101 @@
                 <input type="hidden" name="id" th:value="${rental.getId()}" />
                 <button type="submit" class="btn btn-sm btn-outline-secondary">취소</button>
               </form>
+              <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#myLargeModal">
+                    반납, 대여 수정
+              </button>
+                <div class="modal fade" id="myLargeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="exampleModalLabel">대여, 반납일 수정</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <div>
+                            <p>대여일</p>
+                            <input type="text" id="datepickerRental">
+                          </div>
+                          <div>
+                            <p>반납일</p>
+                            <input type="text" id="datepickerReturn">
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                          <form action="/rental/update" method="post">
+                            <input type="hidden" name="id" th:value="${rental.getId()}" />
+                            <input type="hidden" id="rentalDate" name="rentalDate">
+                            <input type="hidden" id="returnDate" name="returnDate">
+                            <button type="submit" class="btn btn-primary">수정</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+
+                </div>
+                            <script th:inline="javascript">
+                    var dayOfWeekRental = /*[[${dayOfWeekRental}]]*/ {};
+                    var date = new date();
+                  </script>
+                            <script>
+                    $(document).ready(function() {
+
+                        // Datepicker 초기화
+                        $('#datepickerRental').datepicker({
+                            format: 'yyyy-mm-dd', // 날짜 형식 설정
+                            language : "kr",
+                            daysOfWeekDisabled: getDisabledDays(dayOfWeekRental), // 선택 불가능한 요일 설정 (일요일, 토요일 제외)
+                            startDate: new Date(), // 오늘 이전 날짜 선택 불가능하도록 설정
+                            autoclose: true // 선택한 날짜 선택창이 자동으로 닫히도록 설정
+
+                        })
+                    });
+                    // Rental 날짜 선택 시 반납일 선택 가능하도록 처리
+                    $('#datepickerRental').on('change', function() {
+                        var rentalDate = new Date($(this).val());
+                        rentalDate.setDate(rentalDate.getDate() + 14); // 대여일로부터 2주 뒤
+
+                        // Datepicker 초기화 (반납일)
+                        $('#datepickerReturn').datepicker('remove'); // 기존 Datepicker 초기화
+                        $('#datepickerReturn').val(''); // 기존 반납일 데이터 초기화
+                        $('#datepickerReturn').prop('disabled', false); // 반납일 입력 가능하도록 활성화
+
+                        $('#datepickerReturn').datepicker({
+                            format: 'yyyy-mm-dd',
+                            language: 'kr',
+                            daysOfWeekDisabled: getDisabledDays(dayOfWeekReturn),
+                            endDate: rentalDate, // 대여일로부터 2주 뒤부터 선택 가능
+                            autoclose: true
+                        });
+                    });
+                    $('.btn-primary').click(function() {
+                        // 반납일 선택한 날짜
+                        var rentalDate = $('#datepickerRental').val();
+                        // 숨겨진 input 태그에 선택한 날짜들을 설정
+                        $('#rentalDate').val(rentalDate);
+
+                        // 반납일 선택한 날짜
+                        var returnDate = $('#datepickerReturn').val();
+                        // 숨겨진 input 태그에 선택한 날짜들을 설정
+                        $('#returnDate').val(returnDate);
+                    });
+                    function getDisabledDays(dayOfWeekRental) {
+                        var disabledDays = [];
+                        if (!dayOfWeekRental.monDay) disabledDays.push(1);
+                        if (!dayOfWeekRental.tuesDay) disabledDays.push(2);
+                        if (!dayOfWeekRental.wednesDay) disabledDays.push(3);
+                        if (!dayOfWeekRental.thursDay) disabledDays.push(4);
+                        if (!dayOfWeekRental.friDay) disabledDays.push(5);
+                        if (!dayOfWeekRental.saturDay) disabledDays.push(6);
+                        if (!dayOfWeekRental.sunDay) disabledDays.push(0);
+                        return disabledDays.join(",");
+                    }
+                  </script>
+                            <script th:inline="javascript">
+                    var dayOfWeekReturn = /*[[${dayOfWeekReturn}]]*/ {};
+
+                  </script>
             </span>
                     </li>
                 </ul>
